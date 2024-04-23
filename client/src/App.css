@@ -1,0 +1,78 @@
+:root{
+    --cellWidth: 64px;
+    --cellHeight: 64px;
+    --figureWidth: 48px;
+    --figureHeight: 48px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board{
+    width: calc(var(--cellWidth) * 8);
+    height: calc(var(--cellHeight) * 8);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell{
+    width: var(--cellWidth);
+    height: var(--cellHeight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.figure {
+    width: var(--figureWidth);
+    height: var(--figureHeight);
+    position: relative;
+}
+
+.canTouch {
+    cursor: pointer;
+}
+
+.canAttack {
+    background-color: darkred !important;
+    /*box-shadow: 0 0 10px 5px rgba(139, 0, 0, 0.6);*/
+}
+
+.available {
+    width: calc(var(--cellWidth) - 35px);
+    height: calc(var(--cellHeight) - 35px);
+    border-radius: 50%;
+    background-color: #6fe7e8;
+    box-shadow: 0 0 10px 5px rgba(113, 234, 229, 0.8);
+}
+
+.selected {
+    background-color: limegreen !important;
+    /*box-shadow: 0 0 10px 5px rgba(50, 205, 50, 0.8);*/
+}
+
+.black{
+    background-color: #667792;
+}
+
+.white{
+    background-color: #a2a9ba;
+}
+
+.lost{
+    height: calc(var(--cellHeight) * 4);
+    padding: 30px;
+    margin-left: 50px;
+    background-color: lightgray;
+}
