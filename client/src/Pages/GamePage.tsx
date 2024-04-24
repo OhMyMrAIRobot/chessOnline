@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import BoardComponent from "../components/BoardComponent";
 import LostFigures from "../components/LostFigures";
 import {Board} from "../models/Board";
-import {Player} from "../models/Player";
 import {Colors} from "../models/Colors";
 import {useParams} from "react-router-dom";
 import {sendMessage} from "../handlers/sendMessage";
@@ -12,23 +11,19 @@ import GameState from "../store/GameState";
 const GamePage = () => {
     const [board, setBoard] = useState(new Board());
     const [socket, setSocket] = useState(new WebSocket(`ws://localhost:8080`))
-    const [whitePlayer, setWhitePlayer] =
-        useState<Player>(new Player(Colors.WHITE, socket, 1, 'user1'));
-
-    const [blackPlayer, setBlackPlayer] = useState(new Player(Colors.BLACK, socket, 1, 'user2'));
-    const [currentPlayer, setCurrentPlayer] = useState <Player | null>(null)
-
+    const [curMove, setCurMove] = useState<Colors | null>(null)
     const params = useParams();
 
     useEffect(() => {
         GameState.setSocket(socket)
+        GameState.setColor(Colors.WHITE)
         socket.onopen = () => {
             board.initCells();
             board.addFigures();
             console.log(board);
             sendMessage(socket, {method: 'connection', id: params.id, username: 'user1'});
-            setCurrentPlayer(whitePlayer);
-            messageHandler(socket, board, swapPlayer, currentPlayer, updateBoard);
+            setCurMove(Colors.WHITE);
+            messageHandler(socket, board, swapPlayer, updateBoard);
         };
     }, [])
 
@@ -37,10 +32,9 @@ const GamePage = () => {
         setBoard(newBoard);
     }
 
-    function swapPlayer(Player: Player) {
-        setCurrentPlayer(
-            currentPlayer && currentPlayer._color === Colors.WHITE ? blackPlayer : whitePlayer
-        );
+    function swapPlayer() {
+        setCurMove(GameState._color === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+        GameState.setColor(GameState._color === Colors.WHITE ? Colors.BLACK : Colors.WHITE)
         console.log('swapped');
     }
 
@@ -49,7 +43,7 @@ const GamePage = () => {
             <BoardComponent
                 board={board}
                 updateBoard={updateBoard}
-                currentPlayer={currentPlayer}
+                curMove={curMove}
                 swapPlayer={swapPlayer}
             />
             <div>

@@ -2,19 +2,19 @@ import React, {FC, useEffect, useState} from 'react';
 import {Board} from "../models/Board";
 import CellComponent from "./CellComponent";
 import {Cell} from "../models/Cell";
-import {Player} from "../models/Player";
 import {sendMessage} from "../handlers/sendMessage";
 import {useParams} from "react-router-dom";
 import GameState from "../store/GameState";
+import {Colors} from "../models/Colors";
 
 interface BoardProps {
     board: Board;
-    currentPlayer: Player | null;
-    swapPlayer: (player: Player) => void;
+    curMove: Colors | null;
+    swapPlayer: () => void;
     updateBoard: () => void;
 }
 
-const BoardComponent: FC<BoardProps> = ({board, updateBoard, currentPlayer, swapPlayer}) => {
+const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, swapPlayer}) => {
 
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null)
 
@@ -27,17 +27,16 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, currentPlayer, swap
     function click(cell: Cell) {
         if ((selectedCell && (selectedCell === cell)))
             setSelectedCell(null);
-        else if (selectedCell && (selectedCell !== cell) && selectedCell._figure?.canMove(cell) && currentPlayer){
+        else if (selectedCell && (selectedCell !== cell) && selectedCell._figure?.canMove(cell)){
             sendMessage(GameState._socket, {
                 id: params.id,
                 method: 'move',
                 x0: selectedCell._x, y0: selectedCell._y, // from
                 x1: cell._x, y1: cell._y, // to
             });
-     //       swapPlayer(currentPlayer);
             setSelectedCell(null);
         } else {
-            if (cell._figure?._color === currentPlayer?._color){
+            if (cell._figure?._color === curMove){
                 setSelectedCell(cell);
             }
         }
