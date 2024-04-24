@@ -1,6 +1,6 @@
 import {Cell} from "../models/Cell";
 import {Board} from "../models/Board";
-import GameState from "../store/GameState";
+import {Colors} from "../models/Colors";
 
 interface Message {
     method: string;
@@ -16,7 +16,8 @@ interface Message {
 export const messageHandler = (
     socket: WebSocket,
     board: Board,
-    swapPlayer: () => void,
+    curMove: Colors | null,
+    setCurMove: (color: Colors | null) => void,
     updateBoard: () => void,
     ) => {
     socket.onmessage = (event: MessageEvent) => {
@@ -32,8 +33,8 @@ export const messageHandler = (
                     cell = board.getCell(msg.x1, msg.y1);
                     selectedCell.moveFigure(cell);
                     updateBoard()
-                    swapPlayer()
-                    console.log(GameState._color)
+                    setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+                    console.log(curMove);
                 }
                 break;
         }

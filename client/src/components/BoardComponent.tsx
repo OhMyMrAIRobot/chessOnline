@@ -10,11 +10,10 @@ import {Colors} from "../models/Colors";
 interface BoardProps {
     board: Board;
     curMove: Colors | null;
-    swapPlayer: () => void;
     updateBoard: () => void;
 }
 
-const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, swapPlayer}) => {
+const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove}) => {
 
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null)
 
@@ -36,7 +35,7 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, swapPlayer
             });
             setSelectedCell(null);
         } else {
-            if (cell._figure?._color === curMove){
+            if (cell._figure?._color === GameState._color && curMove === GameState._color){
                 setSelectedCell(cell);
             }
         }

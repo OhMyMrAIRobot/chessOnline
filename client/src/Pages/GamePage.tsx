@@ -12,18 +12,22 @@ const GamePage = () => {
     const [board, setBoard] = useState(new Board());
     const [socket, setSocket] = useState(new WebSocket(`ws://localhost:8080`))
     const [curMove, setCurMove] = useState<Colors | null>(null)
+
+    useEffect(() => {
+        messageHandler(socket, board, curMove, setCurMove, updateBoard);
+    }, [curMove]);
+
     const params = useParams();
 
     useEffect(() => {
         GameState.setSocket(socket)
-        GameState.setColor(Colors.WHITE)
+        GameState.setColor(params.color === 'White' ? Colors.WHITE : Colors.BLACK);
+        board._blackPlayer = params.color !== 'White';
         socket.onopen = () => {
             board.initCells();
             board.addFigures();
-            console.log(board);
             sendMessage(socket, {method: 'connection', id: params.id, username: 'user1'});
             setCurMove(Colors.WHITE);
-            messageHandler(socket, board, swapPlayer, updateBoard);
         };
     }, [])
 
@@ -33,18 +37,19 @@ const GamePage = () => {
     }
 
     function swapPlayer() {
-        setCurMove(GameState._color === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
-        GameState.setColor(GameState._color === Colors.WHITE ? Colors.BLACK : Colors.WHITE)
+        setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+       // GameState.setColor(GameState._color === Colors.WHITE ? Colors.BLACK : Colors.WHITE)
         console.log('swapped');
     }
 
     return (
         <div className = "app">
+            <h5 style={{padding: '4px'}}>color: {GameState._color}</h5>
+            <h5>move: {curMove}</h5>
             <BoardComponent
                 board={board}
                 updateBoard={updateBoard}
                 curMove={curMove}
-                swapPlayer={swapPlayer}
             />
             <div>
                 <LostFigures

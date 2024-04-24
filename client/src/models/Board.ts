@@ -7,6 +7,7 @@ import {Bishop} from "./figures/Bishop";
 import {Knight} from "./figures/Knight";
 import {Rook} from "./figures/Rook";
 import {Figure} from "./figures/Figure";
+import GameState from "../store/GameState";
 
 export class Board {
     _cells: Cell[][] = [];
@@ -37,41 +38,59 @@ export class Board {
     }
 
     private addPawns() {
-        for (let i = 0; i < 8; i++){
-            new Pawn(Colors.BLACK, this.getCell(i, 1))
-            new Pawn(Colors.WHITE, this.getCell(i, 6))
+        for (let i = 0; i < 8; i++) {
+            const whitePawn = GameState._color === Colors.WHITE ? 6 : 1;
+            const blackPawn = 7 - whitePawn;
+
+            new Pawn(Colors.BLACK, this.getCell(i, blackPawn));
+            new Pawn(Colors.WHITE, this.getCell(i, whitePawn));
         }
     }
 
     private addKings() {
-        new King(Colors.BLACK, this.getCell(4, 0))
-        new King(Colors.WHITE, this.getCell(4, 7))
+        const whiteKing = GameState._color === Colors.WHITE ? 7 : 0;
+        const blackKing = 7 - whiteKing;
+
+        new King(Colors.BLACK, this.getCell(4, blackKing));
+        new King(Colors.WHITE, this.getCell(4, whiteKing));
     }
 
     private addQueens() {
-        new Queen(Colors.BLACK, this.getCell(3, 0))
-        new Queen(Colors.WHITE, this.getCell(3, 7))
+        const whiteQueen = GameState._color === Colors.WHITE ? 7 : 0;
+        const blackQueen = 7 - whiteQueen;
+
+        new Queen(Colors.BLACK, this.getCell(3, blackQueen));
+        new Queen(Colors.WHITE, this.getCell(3, whiteQueen));
     }
 
     private addBishops() {
-        new Bishop(Colors.BLACK, this.getCell(2,0));
-        new Bishop(Colors.BLACK, this.getCell(5,0));
-        new Bishop(Colors.WHITE, this.getCell(2,7));
-        new Bishop(Colors.WHITE, this.getCell(5,7));
+        const color1 = (GameState._color === Colors.WHITE) ? Colors.BLACK : Colors.WHITE;
+        const color2 = color1 === Colors.WHITE ? Colors.BLACK : Colors.WHITE;
+
+        new Bishop(color1, this.getCell(2, 0));
+        new Bishop(color1, this.getCell(5, 0));
+        new Bishop(color2, this.getCell(2, 7));
+        new Bishop(color2, this.getCell(5, 7));
     }
 
     private addKnights() {
-        new Knight(Colors.BLACK, this.getCell(1,0));
-        new Knight(Colors.BLACK, this.getCell(6,0));
-        new Knight(Colors.WHITE, this.getCell(1,7));
-        new Knight(Colors.WHITE, this.getCell(6,7));
+        const color1 = (GameState._color === Colors.WHITE) ? Colors.BLACK : Colors.WHITE;
+        const color2 = color1 === Colors.WHITE ? Colors.BLACK : Colors.WHITE;
+
+        new Knight(color1, this.getCell(1,0));
+        new Knight(color1, this.getCell(6,0));
+        new Knight(color2, this.getCell(1,7));
+        new Knight(color2, this.getCell(6,7));
     }
 
     private addRooks() {
-        new Rook(Colors.BLACK, this.getCell(0,0));
-        new Rook(Colors.BLACK, this.getCell(7,0));
-        new Rook(Colors.WHITE, this.getCell(0,7));
-        new Rook(Colors.WHITE, this.getCell(7,7));
+        const color1 = (GameState._color === Colors.WHITE) ? Colors.BLACK : Colors.WHITE;
+        const color2 = color1 === Colors.WHITE ? Colors.BLACK : Colors.WHITE;
+
+        new Rook(color1, this.getCell(0,0));
+        new Rook(color1, this.getCell(7,0));
+        new Rook(color2, this.getCell(0,7));
+        new Rook(color2, this.getCell(7,7));
     }
 
     public addFigures() {

@@ -11,7 +11,7 @@ const App: React.FC = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path={"/"} element = {<WelcomePage />}/>
-                    <Route path={"/:id"} element = {<GamePage />}/>
+                    <Route path={"/:color/:id"} element = {<GamePage />}/>
                 </Routes>
             </BrowserRouter>
         </div>
