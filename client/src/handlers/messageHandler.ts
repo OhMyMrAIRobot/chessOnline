@@ -1,6 +1,7 @@
 import {Cell} from "../models/Cell";
 import {Board} from "../models/Board";
 import {Colors} from "../models/Colors";
+import GameState from "../store/GameState";
 
 interface Message {
     method: string;
@@ -29,8 +30,15 @@ export const messageHandler = (
                 let selectedCell: Cell;
                 let cell: Cell;
                 if (msg.x0 !== undefined && msg.y0 !== undefined && msg.x1 !== undefined && msg.y1 !== undefined){
-                    selectedCell = board.getCell(msg.x0, msg.y0);
-                    cell = board.getCell(msg.x1, msg.y1);
+                    if (curMove === GameState._color){
+                        selectedCell = board.getCell(msg.x0, msg.y0);
+                        cell = board.getCell(msg.x1, msg.y1);
+                    } else {
+                        selectedCell = board.getCell(7 - msg.x0, 7 - msg.y0);
+                        cell = board.getCell(7 - msg.x1, 7 - msg.y1);
+                    }
+                    console.log(selectedCell);
+                    console.log(cell);
                     selectedCell.moveFigure(cell);
                     updateBoard()
                     setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);

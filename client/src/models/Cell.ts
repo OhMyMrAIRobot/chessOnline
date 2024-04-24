@@ -113,7 +113,7 @@ export class Cell{
     }
 
     public moveFigure(targetCell: Cell) {
-        if (this._figure && this._figure?.canMove(targetCell)){
+        if (this._figure){
             this._figure.moveFigure(targetCell);
             if (targetCell._figure){
                 this.addLostFigure(targetCell._figure);

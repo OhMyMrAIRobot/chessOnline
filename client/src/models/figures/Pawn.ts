@@ -3,6 +3,7 @@ import {Colors} from "../Colors";
 import {Cell} from "../Cell";
 import blackImg from "../../resourses/images/black-pawn.png";
 import whiteImg from "../../resourses/images/white-pawn.png";
+import GameState from "../../store/GameState";
 
 export class Pawn extends Figure {
 
@@ -15,10 +16,10 @@ export class Pawn extends Figure {
     }
 
     private isPathObstructed(target: Cell): boolean {
-        const direction = this._cell._figure?._color === Colors.BLACK ? 1 : -1;
+        const direction = -1;
         const startY = this._cell._y + direction;
         const endY = target._y;
-        const step = direction > 0 ? 1 : -1;
+        const step = -1;
 
         for (let y = startY; y !== endY; y += step) {
             if (!this._cell._board.getCell(target._x, y).isEmpty()) {
@@ -33,8 +34,8 @@ export class Pawn extends Figure {
         if (!super.canMove(target))
             return false;
 
-        const direction = this._cell._figure?._color === Colors.BLACK ? 1 : -1;
-        const firstStepDirection = this._cell._figure?._color === Colors.BLACK ? 2 : -2;
+        const direction = -1;
+        const firstStepDirection = -2;
 
         if (target._x === this._cell._x) {
             if (target._y === this._cell._y + direction && this._cell._board.getCell(target._x, target._y).isEmpty()) {
