@@ -7,6 +7,7 @@ import {Bishop} from "./figures/Bishop";
 import {Knight} from "./figures/Knight";
 import {Rook} from "./figures/Rook";
 import {Figure} from "./figures/Figure";
+import {Player} from "./Player";
 
 export class Board {
     _cells: Cell[][] = [];

@@ -99,38 +99,6 @@ export class Cell{
         return false;
     }
 
-    // public isKingUnderAttack(color: Colors): boolean {
-    //     const king = this.getKing(color);
-    //
-    //     for (const row of this._board._cells) {
-    //         for (const cell of row) {
-    //             const figure = cell._figure;
-    //             if (figure && figure._color !== color) {
-    //                 if (figure._name === FigureNames.PAWN && figure.canPawnAttack(king)) {
-    //                     return true;
-    //                 }
-    //                 // if (figure.canMove(king) && figure._name !== FigureNames.PAWN) {
-    //                 //     return true;
-    //                 // }
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
-    //
-    // getKing(color: Colors): Cell {
-    //     let res: Cell = new Cell(this._board, 0, 0, Colors.BLACK, null);
-    //     this._board._cells.forEach((row) => {
-    //         row.forEach((cell) => {
-    //             if (cell._figure?._name === FigureNames.KING && cell._figure._color === color){
-    //                 res = cell;
-    //                 //return cell;
-    //             }
-    //
-    //         })
-    //     })
-    //     return res;
-    // }
 
     setFigure(figure: Figure) {
         this._figure = figure;

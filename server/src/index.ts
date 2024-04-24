@@ -1,31 +1,30 @@
-import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import http from 'http';
 import WebSocket from 'ws';
 
 dotenv.config();
 
-const app: Express = express();
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-const port = process.env.PORT || 3001;
+const wss = new WebSocket.Server({ port: 8080 });
 
 interface WebSocketWithId extends WebSocket {
-    id: string;
+    id: number;
 }
 
-wss.on('/', (ws: WebSocketWithId) => {
+wss.on('connection', (ws: WebSocketWithId) => {
     ws.on('message', (msg: any) => {
-        msg = JSON.parse(msg.toString());
+        msg = JSON.parse(msg);
         switch (msg.method) {
             case 'connection':
                 connectionHandler(ws, msg);
+                break;
+            case 'move':
+                console.log(msg);
+                broadcast(ws, msg);
                 break;
         }
     });
 });
 
-const broadcast = (ws: WebSocketWithId, msg: { id: string; data: any }) => {
+const broadcast = (ws: WebSocketWithId, msg: { id: number; data: any }) => {
     wss.clients.forEach((client) => {
         if ((client as WebSocketWithId).id === msg.id) {
             (client as WebSocketWithId).send(JSON.stringify(msg));
@@ -33,11 +32,8 @@ const broadcast = (ws: WebSocketWithId, msg: { id: string; data: any }) => {
     });
 };
 
-const connectionHandler = (ws: WebSocketWithId, msg: { id: string, data: any }) => {
+const connectionHandler = (ws: WebSocketWithId, msg: { id: number, data: any }) => {
     (ws as WebSocketWithId).id = msg.id;
     broadcast(ws, msg);
 };
 
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-});
