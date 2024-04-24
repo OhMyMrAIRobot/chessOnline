@@ -1,8 +1,8 @@
 :root{
-    --cellWidth: 64px;
-    --cellHeight: 64px;
-    --figureWidth: 48px;
-    --figureHeight: 48px;
+    --cellWidth: 80px;
+    --cellHeight: 80px;
+    --figureWidth: 76px;
+    --figureHeight: 76px;
 }
 
 * {
@@ -20,8 +20,8 @@
 }
 
 .board{
-    width: calc(var(--cellWidth) * 8);
-    height: calc(var(--cellHeight) * 8);
+    width: calc(var(--cellWidth) * 8 );
+    height: calc(var(--cellHeight) * 8 );
     display: flex;
     flex-wrap: wrap;
 }
@@ -45,29 +45,31 @@
 }
 
 .canAttack {
-    background-color: darkred !important;
+    background-color: rgba(204, 18, 42, 0.9) !important;
     /*box-shadow: 0 0 10px 5px rgba(139, 0, 0, 0.6);*/
 }
 
 .available {
-    width: calc(var(--cellWidth) - 35px);
-    height: calc(var(--cellHeight) - 35px);
+    width: calc(var(--cellWidth) / 2);
+    height: calc(var(--cellHeight) / 2);
     border-radius: 50%;
-    background-color: #6fe7e8;
-    box-shadow: 0 0 10px 5px rgba(113, 234, 229, 0.8);
+    background-color: #ffff33;
+    box-shadow: 0 0 10px 5px rgba(255, 255, 51, 0.7);
 }
 
 .selected {
-    background-color: limegreen !important;
+    background-color: rgba(255, 255, 51, 0.6) !important;
     /*box-shadow: 0 0 10px 5px rgba(50, 205, 50, 0.8);*/
 }
 
 .black{
-    background-color: #667792;
+    /*background-color: #667792;*/
+    background-color: #739552;
 }
 
 .white{
-    background-color: #a2a9ba;
+    /*background-color: #a2a9ba;*/
+    background-color: rgba(235, 236, 208, 0.9);
 }
 
 .lost{

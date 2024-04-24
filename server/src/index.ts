@@ -17,7 +17,6 @@ wss.on('connection', (ws: WebSocketWithId) => {
                 connectionHandler(ws, msg);
                 break;
             case 'move':
-                console.log(msg);
                 broadcast(ws, msg);
                 break;
         }

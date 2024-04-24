@@ -37,8 +37,6 @@ export const messageHandler = (
                         selectedCell = board.getCell(7 - msg.x0, 7 - msg.y0);
                         cell = board.getCell(7 - msg.x1, 7 - msg.y1);
                     }
-                    console.log(selectedCell);
-                    console.log(cell);
                     selectedCell.moveFigure(cell);
                     updateBoard()
                     setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);

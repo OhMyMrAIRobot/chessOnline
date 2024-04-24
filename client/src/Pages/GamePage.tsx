@@ -36,12 +36,6 @@ const GamePage = () => {
         setBoard(newBoard);
     }
 
-    function swapPlayer() {
-        setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
-       // GameState.setColor(GameState._color === Colors.WHITE ? Colors.BLACK : Colors.WHITE)
-        console.log('swapped');
-    }
-
     return (
         <div className = "app">
             <h5 style={{padding: '4px'}}>color: {GameState._color}</h5>

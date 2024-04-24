@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackImg from "../../resourses/images/black-bishop.png"
-import whiteImg from "../../resourses/images/white-bishop.png"
+import blackImg from "../../resourses/images/kosal/black-bishop.svg"
+import whiteImg from "../../resourses/images/kosal/white-bishop.svg"
 
 export class Bishop extends Figure {
 
