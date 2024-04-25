@@ -19,6 +19,8 @@ interface WebSocketWithId extends WebSocket {
 app.use(express.json());
 app.use(cors())
 
+const Games: Array<string> = [];
+
 app.post('/createGame', (req, res) => {
     try {
         const id: any = req.query.id;
@@ -30,7 +32,18 @@ app.post('/createGame', (req, res) => {
     }
 })
 
-const Games: Array<string> = [];
+app.get('/getGame', (req, res) => {
+    try{
+        const id: any = req.query.id;
+        console.log(id);
+        if (Games.includes(id)) {
+            return res.status(200).json({message: 'Room exists'})
+        } else
+            return res.status(404).json({message: 'Room doesn\'t exist'})
+    } catch (e) {
+        return res.status(500).json({message: e})
+    }
+})
 
 wss.on('connection', (ws: WebSocketWithId) => {
     ws.on('message', (msg: any) => {

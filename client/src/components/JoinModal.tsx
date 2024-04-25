@@ -1,26 +1,22 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import Modal from "./Modal";
 import "../resourses/styles/JoinModal.css"
+import {JoinGameHandler} from "../handlers/JoinGameHandler";
 
 interface JoinModal {
     modalActive: boolean;
     setModalActive: (bool: boolean) => void;
-    inputRef: any;
-    jumpToRoom: (color: string, id: string) => void;
+    jumpToGame: (color: string, id: string) => void;
 }
 
-const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, inputRef, jumpToRoom}) => {
+const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, jumpToGame}) => {
 
-    useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [modalActive]);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     return (
         <Modal active={modalActive} setActive={setModalActive} canClose={true}>
             <div onKeyDown={e => {
-                     if (e.key === 'Enter') {}
+                     if (e.key === 'Enter') JoinGameHandler(jumpToGame, inputRef.current)
                      else if (e.key === 'Escape') setModalActive(false)
                  }}
             >
@@ -28,17 +24,18 @@ const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, inputRef, jumpTo
                 <input
                     placeholder = "Enter"
                     onChange={(e) => {
-                        e.target.value !== '' ?
-                            inputRef.current.style.borderColor = "green"
-                            :
-                            inputRef.current.style.borderColor = "red"
+                        if (inputRef.current)
+                            e.target.value !== '' ?
+                                inputRef.current.style.borderColor = "green"
+                                :
+                                inputRef.current.style.borderColor = "red"
                     }}
                     className = "input" ref = {inputRef} type = 'text'
                 />
 
                 <div className={"buttonContainer"}>
                     <button className = "button exit" onClick={e => setModalActive(false)}>Cancel</button>
-                    <button className = "button join" onClick={() => {}}>Join</button>
+                    <button className = "button join" onClick={() => {JoinGameHandler(jumpToGame, inputRef.current)}}>Join</button>
                 </div>
 
             </div>

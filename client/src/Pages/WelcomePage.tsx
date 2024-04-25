@@ -10,8 +10,6 @@ const WelcomePage = () => {
 
     const [modalActive, setModalActive] = useState<boolean>(false);
 
-    const inputRef = useRef()
-
     const jumpToGame = (color: string, id: string) => {
         navigate(`/${color}/${id}`);
     }
@@ -19,7 +17,7 @@ const WelcomePage = () => {
     return (
 
         <div className="welcomeContainer">
-            <JoinModal inputRef={inputRef} modalActive={modalActive} setModalActive={setModalActive} jumpToRoom={jumpToGame}/>
+            <JoinModal modalActive={modalActive} setModalActive={setModalActive} jumpToGame={jumpToGame}/>
 
             <button
                 onClick={() => CreateRoomHandler(jumpToGame)}
