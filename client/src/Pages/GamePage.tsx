@@ -37,14 +37,7 @@ const GamePage = () => {
     }
 
     return (
-        <div className = "app">
-            <h5 style={{padding: '4px'}}>color: {GameState._color}</h5>
-            <h5>move: {curMove}</h5>
-            <BoardComponent
-                board={board}
-                updateBoard={updateBoard}
-                curMove={curMove}
-            />
+        <div className="app">
             <div>
                 <LostFigures
                     title={"Белые фигуры"}
@@ -55,6 +48,11 @@ const GamePage = () => {
                     figures={board._lostBlackFigures}
                 />
             </div>
+            <BoardComponent
+                board={board}
+                updateBoard={updateBoard}
+                curMove={curMove}
+            />
         </div>
     );
 };

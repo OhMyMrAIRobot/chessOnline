@@ -41,8 +41,12 @@ export class Figure{
         return true
     }
 
-    canPawnAttack(target: Cell): boolean {
-        const direction = -1;
+    canKingAttack(target: Cell): boolean {
+        return !(Math.abs(target._x - this._cell._x) > 1 || Math.abs(target._y - this._cell._y) > 1);
+    }
+
+    canPawnAttack(enemy: boolean, target: Cell): boolean {
+        const direction = enemy ? 1 : -1;
         return target._y === this._cell._y + direction
             && (target._x === this._cell._x + 1 || target._x === this._cell._x - 1);
     }

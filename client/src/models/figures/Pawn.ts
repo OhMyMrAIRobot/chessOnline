@@ -46,7 +46,7 @@ export class Pawn extends Figure {
             }
         }
 
-        if (this.canPawnAttack(target) && this._cell.isEnemy(target)){
+        if (this.canPawnAttack(false, target) && this._cell.isEnemy(target)){
             return true;
         }
 

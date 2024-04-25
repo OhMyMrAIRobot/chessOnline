@@ -83,12 +83,16 @@ export class Cell{
             for (const cell of row) {
                 const figure = cell._figure;
                 if (figure && figure._color !== color) {
-                    if (figure._name === FigureNames.PAWN && figure.canPawnAttack(target)) {
+                    if (figure._name === FigureNames.PAWN && figure.canPawnAttack(true, target)) {
                         return true;
                     }
+
                     const tmp = target._figure;
                     target._figure = null;
-                    if (figure.canMove(target) && figure._name !== FigureNames.PAWN) {
+                    if (figure._name === FigureNames.KING && figure.canKingAttack(target)){
+                        target._figure = tmp;
+                        return true;
+                    } else if (figure.canMove(target) && figure._name !== FigureNames.PAWN) {
                         target._figure = tmp;
                         return true;
                     }
