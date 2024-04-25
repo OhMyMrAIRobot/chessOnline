@@ -8,6 +8,7 @@ import {Knight} from "./figures/Knight";
 import {Rook} from "./figures/Rook";
 import {Figure} from "./figures/Figure";
 import GameState from "../store/GameState";
+import gameState from "../store/GameState";
 
 export class Board {
     _cells: Cell[][] = [];
@@ -20,12 +21,7 @@ export class Board {
         for (let i = 0; i < 8; i++) {
             const row: Cell[] = [];
             for (let j = 0; j < 8; j++) {
-                let color: Colors;
-                if (this._blackPlayer) {
-                    color = (i + j) % 2 === 0 ? Colors.BLACK : Colors.WHITE;
-                } else {
-                    color = (i + j) % 2 !== 0 ? Colors.BLACK : Colors.WHITE;
-                }
+                const color: Colors = (i + j) % 2 !== 0 ? Colors.BLACK : Colors.WHITE;
                 const cell = new Cell(this, j, i, color, null);
                 row.push(cell);
             }
@@ -48,19 +44,24 @@ export class Board {
     }
 
     private addKings() {
-        const whiteKing = GameState._color === Colors.WHITE ? 7 : 0;
-        const blackKing = 7 - whiteKing;
+        if (gameState._color === Colors.WHITE){
+            new King(Colors.BLACK, this.getCell(4, 0));
+            new King(Colors.WHITE, this.getCell(4, 7));
+        } else {
+            new King(Colors.BLACK, this.getCell(3, 7));
+            new King(Colors.WHITE, this.getCell(3, 0));
+        }
 
-        new King(Colors.BLACK, this.getCell(4, blackKing));
-        new King(Colors.WHITE, this.getCell(4, whiteKing));
     }
 
     private addQueens() {
-        const whiteQueen = GameState._color === Colors.WHITE ? 7 : 0;
-        const blackQueen = 7 - whiteQueen;
-
-        new Queen(Colors.BLACK, this.getCell(3, blackQueen));
-        new Queen(Colors.WHITE, this.getCell(3, whiteQueen));
+        if (gameState._color === Colors.WHITE){
+            new Queen(Colors.BLACK, this.getCell(3, 0));
+            new Queen(Colors.WHITE, this.getCell(3, 7));
+        } else {
+            new Queen(Colors.BLACK, this.getCell(4, 7));
+            new Queen(Colors.WHITE, this.getCell(4, 0));
+        }
     }
 
     private addBishops() {

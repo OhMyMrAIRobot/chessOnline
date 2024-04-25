@@ -38,14 +38,11 @@ export class Figure{
         if (target._figure?._color === this._color) // same color
             return false;
 
-        // if (this._cell.isKingUnderAttack(this._color))
-        //     return false;
-
         return true
     }
 
     canPawnAttack(target: Cell): boolean {
-        const direction = this._cell._figure?._color === Colors.BLACK ? 1 : -1;
+        const direction = -1;
         return target._y === this._cell._y + direction
             && (target._x === this._cell._x + 1 || target._x === this._cell._x - 1);
     }

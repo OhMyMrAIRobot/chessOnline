@@ -1,0 +1,45 @@
+.buttonContainer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.button{
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.input{
+    font-weight: bold;
+    width: 300px;
+    height: 25px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    padding-left: 5px;
+    outline: none;
+    background-color: #F6F6F6;
+    border: 2px solid black;
+}
+
+.text{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.join{
+    border: 2px solid darkgreen;
+    background-color: aquamarine;
+}
+
+.exit{
+    border: 2px solid darkred;
+    background-color: crimson;
+}

@@ -1,13 +1,36 @@
 import dotenv from "dotenv";
+import express from 'express';
+import http from 'http';
 import WebSocket from 'ws';
+import cors from 'cors';
 
 dotenv.config();
 
-const wss = new WebSocket.Server({ port: 8080 });
+
+const app = express();
+app.use(cors())
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 interface WebSocketWithId extends WebSocket {
     id: number;
 }
+
+app.use(express.json());
+app.use(cors())
+
+app.post('/createGame', (req, res) => {
+    try {
+        const id: any = req.query.id;
+        Games.push(id);
+
+        return res.status(200).json({message: "Game created"})
+    } catch (e) {
+        return res.status(500).json({message: e})
+    }
+})
+
+const Games: Array<string> = [];
 
 wss.on('connection', (ws: WebSocketWithId) => {
     ws.on('message', (msg: any) => {
@@ -36,3 +59,8 @@ const connectionHandler = (ws: WebSocketWithId, msg: { id: number, data: any }) 
     broadcast(ws, msg);
 };
 
+const PORT = 8080;
+
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
