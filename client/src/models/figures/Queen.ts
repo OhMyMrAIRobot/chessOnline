@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackImg from "../../resourses/images/kosal/black-queen.svg";
-import whiteImg from "../../resourses/images/kosal/white-queen.svg";
+import blackImg from "../../resources/images/kosal/black-queen.svg";
+import whiteImg from "../../resources/images/kosal/white-queen.svg";
 
 export class Queen extends Figure {
     constructor(color: Colors, cell: Cell) {
@@ -21,5 +21,9 @@ export class Queen extends Figure {
         if (this._cell.isEmptyDiagonal(target))
             return true;
         return false;
+    }
+
+    canAttack(target: Cell): boolean {
+        return super.canAttack(target) && ((this._cell.isEmptyVertical(target)) || (this._cell.isEmptyHorizontal(target)) || (this._cell.isEmptyDiagonal(target)));
     }
 }

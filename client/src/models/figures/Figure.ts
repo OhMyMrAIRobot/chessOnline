@@ -1,6 +1,6 @@
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import img from "../../resourses/images/black-knight.png"
+import img from "../../resources/images/black-knight.png"
 
 export enum FigureNames{
     FIGURE = "Фигура",
@@ -37,18 +37,12 @@ export class Figure{
     canMove(target: Cell) : boolean {
         if (target._figure?._color === this._color) // same color
             return false;
-
         return true
-    }
-
-    canKingAttack(target: Cell): boolean {
-        return !(Math.abs(target._x - this._cell._x) > 1 || Math.abs(target._y - this._cell._y) > 1);
     }
 
     canPawnAttack(enemy: boolean, target: Cell): boolean {
         const direction = enemy ? 1 : -1;
-        return target._y === this._cell._y + direction
-            && (target._x === this._cell._x + 1 || target._x === this._cell._x - 1);
+        return target._y === this._cell._y + direction && (target._x === this._cell._x + 1 || target._x === this._cell._x - 1);
     }
 
     moveFigure(target: Cell){}

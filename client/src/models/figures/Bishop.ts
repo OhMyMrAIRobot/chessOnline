@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackImg from "../../resourses/images/kosal/black-bishop.svg"
-import whiteImg from "../../resourses/images/kosal/white-bishop.svg"
+import blackImg from "../../resources/images/kosal/black-bishop.svg"
+import whiteImg from "../../resources/images/kosal/white-bishop.svg"
 
 export class Bishop extends Figure {
 
@@ -20,4 +20,7 @@ export class Bishop extends Figure {
         return false;
     }
 
+    canAttack(target: Cell): boolean {
+        return super.canAttack(target) && this._cell.isEmptyDiagonal(target);
+    }
 }

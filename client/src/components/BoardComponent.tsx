@@ -6,14 +6,19 @@ import {sendMessage} from "../handlers/sendMessage";
 import {useParams} from "react-router-dom";
 import GameState from "../store/GameState";
 import {Colors} from "../models/Colors";
+import {FigureNames} from "../models/figures/Figure";
+import ChooseFigure from "./ChooseFigureModal";
 
 interface BoardProps {
     board: Board;
     curMove: Colors | null;
     updateBoard: () => void;
+    setFigureModalActive: (active: boolean) => void;
+    setSelectedCellOut: (cell: Cell | null) => void;
+    setCell: (cell: Cell | null) => void;
 }
 
-const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove}) => {
+const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureModalActive, setCell, setSelectedCellOut}) => {
 
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null)
 
@@ -27,12 +32,20 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove}) => {
         if ((selectedCell && (selectedCell === cell)))
             setSelectedCell(null);
         else if (selectedCell && (selectedCell !== cell) && selectedCell._figure?.canMove(cell)){
-            sendMessage(GameState._socket, {
-                id: params.id,
-                method: 'move',
-                x0: selectedCell._x, y0: selectedCell._y, // from
-                x1: cell._x, y1: cell._y, // to
-            });
+            if (selectedCell._figure?._name === FigureNames.PAWN) {
+                if (cell._y === 0) {
+                    setSelectedCellOut(selectedCell);
+                    setCell(cell);
+                    setFigureModalActive(true);
+                }
+            } else {
+                sendMessage(GameState._socket, {
+                    id: params.id,
+                    method: 'move',
+                    x0: selectedCell._x, y0: selectedCell._y,
+                    x1: cell._x, y1: cell._y,
+                });
+            }
             setSelectedCell(null);
         } else {
             if (cell._figure?._color === GameState._color && curMove === GameState._color){
@@ -47,21 +60,19 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove}) => {
     }
 
     return (
-        <div>
-            <div className="board">
-                {board._cells.map((row,index) =>
-                    <React.Fragment key={index}>
-                        {row.map(cell =>
-                            <CellComponent
-                                cell = {cell}
-                                key = {cell._id}
-                                selected={cell._x === selectedCell?._x && cell._y === selectedCell?._y}
-                                click = {click}
-                            />
-                        )}
-                    </React.Fragment>
-                )}
-            </div>
+        <div className="board">
+            {board._cells.map((row, index) =>
+                <React.Fragment key={index}>
+                    {row.map(cell =>
+                        <CellComponent
+                            cell={cell}
+                            key={cell._id}
+                            selected={cell._x === selectedCell?._x && cell._y === selectedCell?._y}
+                            click={click}
+                        />
+                    )}
+                </React.Fragment>
+            )}
         </div>
     );
 };

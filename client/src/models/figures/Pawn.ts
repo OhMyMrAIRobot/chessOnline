@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackImg from "../../resourses/images/kosal/black-pawn.svg";
-import whiteImg from "../../resourses/images/kosal/white-pawn.svg";
+import blackImg from "../../resources/images/kosal/black-pawn.svg";
+import whiteImg from "../../resources/images/kosal/white-pawn.svg";
 
 export class Pawn extends Figure {
 

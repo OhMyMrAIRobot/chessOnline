@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef} from 'react';
 import Modal from "./Modal";
-import "../resourses/styles/JoinModal.css"
+import "../resources/styles/JoinModal.css"
 import {JoinGameHandler} from "../handlers/JoinGameHandler";
 
 interface JoinModal {

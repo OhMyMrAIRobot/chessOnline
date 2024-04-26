@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackImg from "../../resourses/images/kosal/black-knight.svg";
-import whiteImg from "../../resourses/images/kosal/white-knight.svg";
+import blackImg from "../../resources/images/kosal/black-knight.svg";
+import whiteImg from "../../resources/images/kosal/white-knight.svg";
 
 export class Knight extends Figure {
     constructor(color: Colors, cell: Cell) {
@@ -19,5 +19,12 @@ export class Knight extends Figure {
         const dy = Math.abs(this._cell._y - target._y);
 
         return (dx === 1 && dy === 2) || (dx  === 2 && dy === 1);
+    }
+
+    canAttack(target: Cell): boolean {
+
+        const dx = Math.abs(this._cell._x - target._x);
+        const dy = Math.abs(this._cell._y - target._y);
+        return super.canAttack(target) && ((dx === 1 && dy === 2) || (dx  === 2 && dy === 1));
     }
 }

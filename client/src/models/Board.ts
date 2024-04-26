@@ -35,7 +35,7 @@ export class Board {
 
     private addPawns() {
         for (let i = 0; i < 8; i++) {
-            const whitePawn = GameState._color === Colors.WHITE ? 6 : 1;
+            const whitePawn = GameState._color === Colors.WHITE ? 1 : 6;
             const blackPawn = 7 - whitePawn;
 
             new Pawn(Colors.BLACK, this.getCell(i, blackPawn));
@@ -95,12 +95,12 @@ export class Board {
     }
 
     public addFigures() {
-        this.addKings();
+    //    this.addKings();
         this.addPawns();
-        this.addQueens();
-        this.addBishops();
-        this.addKnights();
-        this.addRooks();
+        // this.addQueens();
+        // this.addBishops();
+        // this.addKnights();
+        // this.addRooks();
     }
 
     public highlightCells(selectedCell: Cell | null)  {

@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import "../resourses/styles/Welcome.css"
+import "../resources/styles/Welcome.css"
 import {useNavigate} from "react-router-dom";
 import JoinModal from "../components/JoinModal";
 import {CreateRoomHandler} from "../handlers/CreateGameHandler";

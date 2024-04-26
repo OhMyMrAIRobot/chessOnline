@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackImg from "../../resourses/images/kosal/black-king.svg";
-import whiteImg from "../../resourses/images/kosal/white-king.svg";
+import blackImg from "../../resources/images/kosal/black-king.svg";
+import whiteImg from "../../resources/images/kosal/white-king.svg";
 
 export class King extends Figure {
     constructor(color: Colors, cell: Cell) {
@@ -38,6 +38,10 @@ export class King extends Figure {
         }
 
         return false;
+    }
+
+    canAttack(target: Cell): boolean {
+        return super.canAttack(target) && !(Math.abs(target._x - this._cell._x) > 1 || Math.abs(target._y - this._cell._y) > 1);
     }
 
     moveFigure(_target: Cell): void {}

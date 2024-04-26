@@ -7,6 +7,8 @@ import {useParams} from "react-router-dom";
 import {sendMessage} from "../handlers/sendMessage";
 import {messageHandler} from "../handlers/messageHandler";
 import GameState from "../store/GameState";
+import ChooseFigure from "../components/ChooseFigureModal";
+import {Cell} from "../models/Cell";
 
 const GamePage = () => {
     const [board, setBoard] = useState(new Board());
@@ -36,8 +38,18 @@ const GamePage = () => {
         setBoard(newBoard);
     }
 
+    const [figureModalActive, setFigureModalActive] = useState<boolean>(false)
+    const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+    const [cell, setCell] = useState<Cell | null>(null);
+
     return (
         <div className="app">
+            <ChooseFigure
+                modalActive={figureModalActive}
+                setModalActive={setFigureModalActive}
+                selectedCell={selectedCell}
+                cell={cell}
+            />
             <div>
                 <LostFigures
                     title={"Белые фигуры"}
@@ -52,6 +64,9 @@ const GamePage = () => {
                 board={board}
                 updateBoard={updateBoard}
                 curMove={curMove}
+                setFigureModalActive={setFigureModalActive}
+                setSelectedCellOut={setSelectedCell}
+                setCell={setCell}
             />
         </div>
     );

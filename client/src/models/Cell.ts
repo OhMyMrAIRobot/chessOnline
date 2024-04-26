@@ -89,10 +89,7 @@ export class Cell{
 
                     const tmp = target._figure;
                     target._figure = null;
-                    if (figure._name === FigureNames.KING && figure.canKingAttack(target)){
-                        target._figure = tmp;
-                        return true;
-                    } else if (figure.canMove(target) && figure._name !== FigureNames.PAWN) {
+                    if (figure.canAttack(target) && figure._name !== FigureNames.PAWN) {
                         target._figure = tmp;
                         return true;
                     }
