@@ -1,20 +1,20 @@
 import React, {FC} from 'react';
 import Modal from "./Modal";
-import GameState from "../store/GameState";
-import {Colors} from "../models/Colors";
-import whiteBishop from "../resources/images/kosal/white-bishop.svg"
-import blackBishop from "../resources/images/kosal/black-bishop.svg"
-import whiteQueen from "../resources/images/kosal/white-queen.svg"
-import blackQueen from "../resources/images/kosal/black-queen.svg"
-import whiteKnight from "../resources/images/kosal/white-knight.svg"
-import blackKnight from "../resources/images/kosal/black-knight.svg"
-import whitePawn from "../resources/images/kosal/white-pawn.svg"
-import blackPawn from "../resources/images/kosal/black-pawn.svg"
-import whiteRook from "../resources/images/kosal/white-rook.svg"
-import blackRook from "../resources/images/kosal/black-rook.svg"
-import {SendMessage} from "../handlers/SendMessage";
+import GameState from "../../store/GameState";
+import {Colors} from "../../models/Colors";
+import whiteBishop from "../../resources/images/kosal/white-bishop.svg"
+import blackBishop from "../../resources/images/kosal/black-bishop.svg"
+import whiteQueen from "../../resources/images/kosal/white-queen.svg"
+import blackQueen from "../../resources/images/kosal/black-queen.svg"
+import whiteKnight from "../../resources/images/kosal/white-knight.svg"
+import blackKnight from "../../resources/images/kosal/black-knight.svg"
+import whitePawn from "../../resources/images/kosal/white-pawn.svg"
+import blackPawn from "../../resources/images/kosal/black-pawn.svg"
+import whiteRook from "../../resources/images/kosal/white-rook.svg"
+import blackRook from "../../resources/images/kosal/black-rook.svg"
+import {SendMessage} from "../../handlers/SendMessage";
 import {useParams} from "react-router-dom";
-import {Cell} from "../models/Cell";
+import {Cell} from "../../models/Cell";
 
 interface ChooseFigureModal {
     modalActive: boolean;

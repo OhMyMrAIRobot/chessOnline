@@ -14,7 +14,6 @@ export class Board {
     _cells: Cell[][] = [];
     _lostWhiteFigures: Figure[] = [];
     _lostBlackFigures: Figure[] = [];
-    _blackPlayer: boolean = false;
 
     // Fill board
     public initCells() {
@@ -118,7 +117,6 @@ export class Board {
         newBoard._cells = this._cells;
         newBoard._lostWhiteFigures = this._lostWhiteFigures;
         newBoard._lostBlackFigures = this._lostBlackFigures;
-        newBoard._blackPlayer = this._blackPlayer;
         return newBoard;
     }
 }

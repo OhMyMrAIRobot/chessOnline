@@ -1,7 +1,7 @@
 import React, {FC, useRef} from 'react';
 import Modal from "./Modal";
-import "../resources/styles/JoinModal.css"
-import {ValidateGameHandler} from "../handlers/ValidateGameHandler";
+import "../../resources/styles/JoinModal.css"
+import {ValidateGameHandler} from "../../handlers/ValidateGameHandler";
 
 interface JoinModal {
     modalActive: boolean;
@@ -30,7 +30,7 @@ const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, jumpToGame}) => 
                      else if (e.key === 'Escape') setModalActive(false)
                  }}
             >
-                <p className = "text">Enter room's ID:</p>
+                <p className = "text">Enter game's ID:</p>
                 <input
                     placeholder = "Enter"
                     onChange={(e) => {

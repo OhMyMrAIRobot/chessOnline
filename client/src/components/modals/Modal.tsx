@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import "../resources/styles/Modal.css"
+import "../../resources/styles/Modal.css"
 
 interface Modal {
     active: boolean;

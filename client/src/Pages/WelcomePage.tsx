@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import "../resources/styles/Welcome.css"
 import {useNavigate} from "react-router-dom";
-import JoinModal from "../components/JoinModal";
+import JoinModal from "../components/modals/JoinModal";
 import {CreateGameHandler} from "../handlers/CreateGameHandler";
 
 const WelcomePage = () => {

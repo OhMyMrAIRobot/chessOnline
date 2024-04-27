@@ -4,17 +4,21 @@ import LostFigures from "../components/LostFigures";
 import {Board} from "../models/Board";
 import {Colors} from "../models/Colors";
 import {useNavigate, useParams} from "react-router-dom";
-import {SendMessage} from "../handlers/SendMessage";
 import GameState from "../store/GameState";
-import ChooseFigure from "../components/ChooseFigureModal";
+import ChooseFigure from "../components/modals/ChooseFigureModal";
 import {Cell} from "../models/Cell";
 import {MessageHandler} from "../handlers/MessageHandler";
 import {ValidateGameHandler} from "../handlers/ValidateGameHandler";
+import UsernameModal from "../components/modals/UsernameModal";
 
 const GamePage = () => {
     const [board, setBoard] = useState(new Board());
     const [socket, setSocket] = useState(new WebSocket(`ws://localhost:8080`));
     const [curMove, setCurMove] = useState<Colors | null>(null);
+    const [usernameModalActive, setUsernameModalActive] = useState<boolean>(true)
+    const [figureModalActive, setFigureModalActive] = useState<boolean>(false)
+    const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+    const [cell, setCell] = useState<Cell | null>(null);
 
     useEffect(() => {
         MessageHandler(socket, board, curMove, setCurMove, updateBoard)
@@ -24,22 +28,19 @@ const GamePage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(params);
         ValidateGameHandler(params.id).then(result => {
-            if (!result)
+            if (!result || !(params.color === 'White' || params.color === 'Black'))
                 navigate(`/`)
-        }).catch((e) => {
-            console.log(e);
+        }).catch(() => {
             navigate(`/`)
         })
 
         GameState.setSocket(socket)
         GameState.setColor(params.color === 'White' ? Colors.WHITE : Colors.BLACK);
-        board._blackPlayer = params.color !== 'White';
         socket.onopen = () => {
             board.initCells();
             board.addFigures();
-            SendMessage(socket, {method: 'connection', id: params.id, username: 'user1'});
-            setCurMove(Colors.WHITE);
         };
     }, [])
 
@@ -48,12 +49,12 @@ const GamePage = () => {
         setBoard(newBoard);
     }
 
-    const [figureModalActive, setFigureModalActive] = useState<boolean>(false)
-    const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
-    const [cell, setCell] = useState<Cell | null>(null);
-
     return (
         <div className="app">
+            <UsernameModal
+                modalActive={usernameModalActive}
+                setModalActive={setUsernameModalActive}
+            />
             <ChooseFigure
                 modalActive={figureModalActive}
                 setModalActive={setFigureModalActive}

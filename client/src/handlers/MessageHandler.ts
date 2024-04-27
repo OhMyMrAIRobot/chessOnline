@@ -11,6 +11,7 @@ import {Rook} from "../models/figures/Rook";
 interface Message {
     method: string;
     username?: string;
+    color?: string;
     cell?: Cell;
     selectedCell?: Cell;
     x0?: number;
@@ -66,6 +67,8 @@ export const MessageHandler = (
         const msg: Message = JSON.parse(event.data);
         switch (msg.method) {
             case 'connection':
+                if (msg.color === 'Black')
+                    setCurMove(Colors.WHITE);
                 break;
             case 'move':
                 moveAndChange(msg, false)
