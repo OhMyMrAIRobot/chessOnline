@@ -1,8 +1,8 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import "../resources/styles/Welcome.css"
 import {useNavigate} from "react-router-dom";
 import JoinModal from "../components/JoinModal";
-import {CreateRoomHandler} from "../handlers/CreateGameHandler";
+import {CreateGameHandler} from "../handlers/CreateGameHandler";
 
 const WelcomePage = () => {
 
@@ -14,13 +14,20 @@ const WelcomePage = () => {
         navigate(`/${color}/${id}`);
     }
 
+    const createGame = async () => {
+        const id = await CreateGameHandler();
+        if (id){
+            jumpToGame('White', id);
+        }
+    }
+
     return (
 
         <div className="welcomeContainer">
             <JoinModal modalActive={modalActive} setModalActive={setModalActive} jumpToGame={jumpToGame}/>
 
             <button
-                onClick={() => CreateRoomHandler(jumpToGame)}
+                onClick={() => createGame()}
                 className="welcomeButton"
             >
                 Create game

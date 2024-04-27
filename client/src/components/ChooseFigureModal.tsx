@@ -12,8 +12,7 @@ import whitePawn from "../resources/images/kosal/white-pawn.svg"
 import blackPawn from "../resources/images/kosal/black-pawn.svg"
 import whiteRook from "../resources/images/kosal/white-rook.svg"
 import blackRook from "../resources/images/kosal/black-rook.svg"
-import {sendMessage} from "../handlers/sendMessage";
-import {Figure} from "../models/figures/Figure";
+import {SendMessage} from "../handlers/SendMessage";
 import {useParams} from "react-router-dom";
 import {Cell} from "../models/Cell";
 
@@ -52,7 +51,7 @@ const ChooseFigureModal: FC<ChooseFigureModal> = ({modalActive, setModalActive, 
                             onClick={() => {
                                 setModalActive(false);
                                 if (selectedCell && cell)
-                                    sendMessage(GameState._socket, {
+                                    SendMessage(GameState._socket, {
                                         id: params.id,
                                         method: 'moveAndChange',
                                         figure: figure.figure,

@@ -1,7 +1,7 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import Modal from "./Modal";
 import "../resources/styles/JoinModal.css"
-import {JoinGameHandler} from "../handlers/JoinGameHandler";
+import {ValidateGameHandler} from "../handlers/ValidateGameHandler";
 
 interface JoinModal {
     modalActive: boolean;
@@ -13,10 +13,20 @@ const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, jumpToGame}) => 
 
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const joinGame = async () => {
+        if (inputRef.current) {
+            const isValid = await ValidateGameHandler(inputRef.current.value);
+            isValid ?
+                jumpToGame('Black', inputRef.current.value)
+                :
+                inputRef.current.style.borderColor = 'red';
+        }
+    }
+
     return (
         <Modal active={modalActive} setActive={setModalActive} canClose={true}>
             <div onKeyDown={e => {
-                     if (e.key === 'Enter') JoinGameHandler(jumpToGame, inputRef.current)
+                     if (e.key === 'Enter') joinGame()
                      else if (e.key === 'Escape') setModalActive(false)
                  }}
             >
@@ -35,7 +45,7 @@ const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, jumpToGame}) => 
 
                 <div className={"buttonContainer"}>
                     <button className = "button exit" onClick={e => setModalActive(false)}>Cancel</button>
-                    <button className = "button join" onClick={() => {JoinGameHandler(jumpToGame, inputRef.current)}}>Join</button>
+                    <button className = "button join" onClick={() => joinGame()}>Join</button>
                 </div>
 
             </div>

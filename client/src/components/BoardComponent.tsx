@@ -2,12 +2,11 @@ import React, {FC, useEffect, useState} from 'react';
 import {Board} from "../models/Board";
 import CellComponent from "./CellComponent";
 import {Cell} from "../models/Cell";
-import {sendMessage} from "../handlers/sendMessage";
+import {SendMessage} from "../handlers/SendMessage";
 import {useParams} from "react-router-dom";
 import GameState from "../store/GameState";
 import {Colors} from "../models/Colors";
 import {FigureNames} from "../models/figures/Figure";
-import ChooseFigure from "./ChooseFigureModal";
 
 interface BoardProps {
     board: Board;
@@ -39,7 +38,7 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
                     setFigureModalActive(true);
                 }
             } else {
-                sendMessage(GameState._socket, {
+                SendMessage(GameState._socket, {
                     id: params.id,
                     method: 'move',
                     x0: selectedCell._x, y0: selectedCell._y,

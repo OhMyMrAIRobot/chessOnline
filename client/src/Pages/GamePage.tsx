@@ -3,32 +3,42 @@ import BoardComponent from "../components/BoardComponent";
 import LostFigures from "../components/LostFigures";
 import {Board} from "../models/Board";
 import {Colors} from "../models/Colors";
-import {useParams} from "react-router-dom";
-import {sendMessage} from "../handlers/sendMessage";
-import {messageHandler} from "../handlers/messageHandler";
+import {useNavigate, useParams} from "react-router-dom";
+import {SendMessage} from "../handlers/SendMessage";
 import GameState from "../store/GameState";
 import ChooseFigure from "../components/ChooseFigureModal";
 import {Cell} from "../models/Cell";
+import {MessageHandler} from "../handlers/MessageHandler";
+import {ValidateGameHandler} from "../handlers/ValidateGameHandler";
 
 const GamePage = () => {
     const [board, setBoard] = useState(new Board());
-    const [socket, setSocket] = useState(new WebSocket(`ws://localhost:8080`))
-    const [curMove, setCurMove] = useState<Colors | null>(null)
+    const [socket, setSocket] = useState(new WebSocket(`ws://localhost:8080`));
+    const [curMove, setCurMove] = useState<Colors | null>(null);
 
     useEffect(() => {
-        messageHandler(socket, board, curMove, setCurMove, updateBoard);
+        MessageHandler(socket, board, curMove, setCurMove, updateBoard)
     }, [curMove]);
 
     const params = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
+        ValidateGameHandler(params.id).then(result => {
+            if (!result)
+                navigate(`/`)
+        }).catch((e) => {
+            console.log(e);
+            navigate(`/`)
+        })
+
         GameState.setSocket(socket)
         GameState.setColor(params.color === 'White' ? Colors.WHITE : Colors.BLACK);
         board._blackPlayer = params.color !== 'White';
         socket.onopen = () => {
             board.initCells();
             board.addFigures();
-            sendMessage(socket, {method: 'connection', id: params.id, username: 'user1'});
+            SendMessage(socket, {method: 'connection', id: params.id, username: 'user1'});
             setCurMove(Colors.WHITE);
         };
     }, [])

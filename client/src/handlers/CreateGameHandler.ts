@@ -1,7 +1,11 @@
 import axios from "axios";
 
-export const CreateRoomHandler = (jumpToGame: (color: string, id: string) => void) => {
+export const CreateGameHandler = async (): Promise<string | null> => {
     const id = (+ new Date).toString(16)
-    axios.post(`http://localhost:8080/createGame?id=${id}`).then(response =>
-        response.status === 200 ? jumpToGame('White', id) : console.log('error'))
+    try {
+        const response = await axios.post(`http://localhost:8080/createGame?id=${id}`);
+        return response.status === 200 ? id : null;
+    } catch (error) {
+        return null;
+    }
 }
