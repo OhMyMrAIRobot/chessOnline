@@ -14,6 +14,7 @@
 .modalActive{
     pointer-events: all;
     opacity: 1;
+    z-index: 100000;
     transform: scale(1);
 }
 

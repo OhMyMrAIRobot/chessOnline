@@ -7,7 +7,8 @@ class GameState {
     _username:string = "";
     _color: Colors | null = null;
     _socket: any;
-    _session: number = -1;
+    _session: string = "";
+    _winner: Colors | null = null;
 
     constructor() {
         makeAutoObservable(this)
@@ -25,7 +26,11 @@ class GameState {
         this._socket = socket;
     }
 
-    setSession(id: number){
+    setWinner(color: Colors | null) {
+        this._winner = color;
+    }
+
+    setSession(id: string){
         this._session = id;
     }
 

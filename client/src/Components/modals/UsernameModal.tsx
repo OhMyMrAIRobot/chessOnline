@@ -1,9 +1,10 @@
 import React, {FC, useRef} from 'react';
 import Modal from "./Modal";
-import GameState from "../../store/GameState";
+import GameState from "../../Store/GameState";
 import "../../Resources/Styles/UsernameModal.css"
 import {SendMessage} from "../../Handlers/SendMessage";
 import {useParams} from "react-router-dom";
+import {Colors} from "../../Models/Colors";
 
 interface UsernameModal {
     modalActive: boolean;
@@ -18,10 +19,10 @@ const UsernameModal: FC<UsernameModal> = ({modalActive, setModalActive}) => {
     const setUsername = () => {
         if (inputRef.current) {
             const username = inputRef.current.value
-            if (username !== "") {
+            if (username !== "" && params.id) {
                 GameState.setUsername(username);
                 setModalActive(false);
-                SendMessage(GameState._socket, {method: 'connection', id: params.id, username: username, color: params.color});
+                SendMessage(GameState._socket, {method: 'connection', id: GameState._session, username: username, color: GameState._color});
             } else {
                 inputRef.current.style.borderColor = "red";
             }

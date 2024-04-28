@@ -4,7 +4,7 @@ import CellComponent from "./CellComponent";
 import {Cell} from "../Models/Cell";
 import {SendMessage} from "../Handlers/SendMessage";
 import {useParams} from "react-router-dom";
-import GameState from "../store/GameState";
+import GameState from "../Store/GameState";
 import {Colors} from "../Models/Colors";
 import {FigureNames} from "../Models/figures/Figure";
 
@@ -25,8 +25,6 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
         highlightCells();
     }, [selectedCell])
 
-    const params = useParams()
-
     function click(cell: Cell) {
         if ((selectedCell && (selectedCell === cell)))
             setSelectedCell(null);
@@ -37,7 +35,7 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
                 setFigureModalActive(true);
             } else {
                 SendMessage(GameState._socket, {
-                    id: params.id,
+                    id: GameState._session,
                     method: 'move',
                     x0: selectedCell._x, y0: selectedCell._y,
                     x1: cell._x, y1: cell._y,

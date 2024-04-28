@@ -1,7 +1,7 @@
 import {Cell} from "../Models/Cell";
 import {Board} from "../Models/Board";
 import {Colors} from "../Models/Colors";
-import GameState from "../store/GameState";
+import GameState from "../Store/GameState";
 import {Queen} from "../Models/figures/Queen";
 import {Bishop} from "../Models/figures/Bishop";
 import {Knight} from "../Models/figures/Knight";
@@ -73,8 +73,8 @@ export const MessageHandler = (
             case 'move':
                 moveAndChange(msg, false);
                 const checkColor = curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE
-                if (curMove)
-                    if (board.checkMate(checkColor)) console.log(curMove + 'lose')
+                if (curMove && board.checkMate(checkColor))
+                    GameState.setWinner(curMove)
                 break;
             case 'moveAndChange':
                 moveAndChange(msg, true)

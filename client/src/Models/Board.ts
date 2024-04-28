@@ -7,8 +7,8 @@ import {Bishop} from "./figures/Bishop";
 import {Knight} from "./figures/Knight";
 import {Rook} from "./figures/Rook";
 import {Figure, FigureNames} from "./figures/Figure";
-import GameState from "../store/GameState";
-import gameState from "../store/GameState";
+import GameState from "../Store/GameState";
+import gameState from "../Store/GameState";
 
 export class Board {
     _cells: Cell[][] = [];
@@ -132,12 +132,12 @@ export class Board {
     }
 
     public addFigures() {
-       this.addKings();
-        this.addPawns();
+        this.addKings();
         this.addQueens();
-        this.addBishops();
-        this.addKnights();
         this.addRooks();
+        // this.addKnights();
+        // this.addPawns();
+        // this.addBishops();
     }
 
     public highlightCells(selectedCell: Cell | null)  {

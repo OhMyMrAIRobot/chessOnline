@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import Modal from "./Modal";
-import GameState from "../../store/GameState";
+import GameState from "../../Store/GameState";
 import {Colors} from "../../Models/Colors";
 import whiteBishop from "../../Resources/Images/kosal/white-bishop.svg"
 import blackBishop from "../../Resources/Images/kosal/black-bishop.svg"
@@ -13,7 +13,6 @@ import blackPawn from "../../Resources/Images/kosal/black-pawn.svg"
 import whiteRook from "../../Resources/Images/kosal/white-rook.svg"
 import blackRook from "../../Resources/Images/kosal/black-rook.svg"
 import {SendMessage} from "../../Handlers/SendMessage";
-import {useParams} from "react-router-dom";
 import {Cell} from "../../Models/Cell";
 
 interface ChooseFigureModal {
@@ -24,8 +23,6 @@ interface ChooseFigureModal {
 }
 
 const ChooseFigureModal: FC<ChooseFigureModal> = ({modalActive, setModalActive, selectedCell, cell}) => {
-
-    const params = useParams();
 
     const figures: Array<{figure: string, src: string}> = GameState._color === Colors.WHITE ? [
         {figure: 'Bishop', src: whiteBishop},
@@ -52,7 +49,7 @@ const ChooseFigureModal: FC<ChooseFigureModal> = ({modalActive, setModalActive, 
                                 setModalActive(false);
                                 if (selectedCell && cell)
                                     SendMessage(GameState._socket, {
-                                        id: params.id,
+                                        id: GameState._session,
                                         method: 'moveAndChange',
                                         figure: figure.figure,
                                         x0: selectedCell._x, y0: selectedCell._y,
