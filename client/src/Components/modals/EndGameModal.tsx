@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import Modal from "./Modal";
-import "../../Resources/Styles/EndGame.css"
+import "../../Resources/Styles/EndGameModal.css"
 import {useNavigate} from "react-router-dom";
 
 interface EndGameModal {

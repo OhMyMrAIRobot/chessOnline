@@ -1,0 +1,110 @@
+@import "./Variables.css";
+
+.chat{
+    width: 300px;
+    height: calc(var(--cellHeight) * 8);
+    border: 2px solid black;
+    background-color: lightgrey;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+    margin-left: 50px;
+}
+
+.msg_container{
+    height: 90%;
+    width: 100%;
+    max-height: 90%;
+    overflow-x: scroll;
+    padding: 5px;
+}
+
+.send_container{
+    height: 10%;
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    align-items: center;
+    padding: 5px;
+    border-top: 1px solid grey;
+}
+
+.send_button{
+    height: 65%;
+    width: 25%;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid black;
+    background-color: #f6f6f6;
+}
+
+.msg_input{
+    height: 65%;
+    font-size: 18px;
+    width: 70%;
+    border-radius: 7px;
+    padding-left: 5px;
+    outline: none;
+    border: 2px solid black;
+}
+
+.msg{
+    margin-top: 10px;
+    max-width: 80%;
+    border-radius: 10px;
+    padding: 2px;
+    background-color: white;
+}
+
+.author{
+    margin-left: auto;
+    background-color: paleturquoise;
+}
+
+.msg:first-child{
+    margin-top: 5px;
+}
+
+.msg_header{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.msg_author{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.msg_time{
+    font-size: 12px;
+}
+
+.msg_text{
+    padding: 5px;
+    max-width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.msg_connect_container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.msg_connect_container:first-child{
+    margin-top: 5px;
+}
+
+.msg_connect{
+    font-size: 16px;
+    font-weight: bold;
+}
+

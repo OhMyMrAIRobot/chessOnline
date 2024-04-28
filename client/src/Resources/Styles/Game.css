@@ -1,9 +1,4 @@
-:root{
-    --cellWidth: 80px;
-    --cellHeight: 80px;
-    --figureWidth: 76px;
-    --figureHeight: 76px;
-}
+@import "./Variables.css";
 
 * {
     margin: 0;
@@ -76,5 +71,8 @@
     height: calc(var(--cellHeight) * 4);
     padding: 30px;
     margin-right: 50px;
-    background-color: lightgray;
+    width: 300px;
+    border: 2px solid black;
+    border-radius: 7px;
+    background-color: lightgrey;
 }

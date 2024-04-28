@@ -10,9 +10,9 @@ import {Cell} from "../Models/Cell";
 import {MessageHandler} from "../Handlers/MessageHandler";
 import {ValidateGameHandler} from "../Handlers/ValidateGameHandler";
 import UsernameModal from "../Components/modals/UsernameModal";
-import {SendMessage} from "../Handlers/SendMessage";
 import gameState from "../Store/GameState";
 import EndGameModal from "../Components/modals/EndGameModal";
+import Chat from "../Components/ChatComponent";
 
 const GamePage = () => {
     // Modals
@@ -25,9 +25,10 @@ const GamePage = () => {
     const [curMove, setCurMove] = useState<Colors | null>(null);
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
     const [cell, setCell] = useState<Cell | null>(null);
+    const [msgArray, setMsgArray] = useState<any[]>([])
 
     useEffect(() => {
-        MessageHandler(socket, board, curMove, setCurMove, updateBoard)
+        MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray)
     }, [curMove]);
 
     useEffect(() => {
@@ -50,7 +51,6 @@ const GamePage = () => {
         if (params.id) GameState.setSession(params.id)
 
         socket.onopen = () => {
-            SendMessage(GameState._socket, {method: 'connection', id: GameState._session, username: '123', color: gameState._color});
             board.initCells();
             board.addFigures();
             setCurMove(Colors.WHITE);
@@ -64,7 +64,7 @@ const GamePage = () => {
 
     return (
         <div className="app">
-            {/*<UsernameModal modalActive={usernameModalActive} setModalActive={setUsernameModalActive}/>*/}
+            <UsernameModal modalActive={usernameModalActive} setModalActive={setUsernameModalActive}/>
             <ChooseFigureModal
                 modalActive={figureModalActive}
                 setModalActive={setFigureModalActive}
@@ -90,6 +90,7 @@ const GamePage = () => {
                 setSelectedCellOut={setSelectedCell}
                 setCell={setCell}
             />
+            <Chat msgArray={msgArray}/>
         </div>
     );
 };

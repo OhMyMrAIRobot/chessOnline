@@ -18,6 +18,8 @@ interface Message {
     y0?: number;
     x1?: number;
     y1?: number;
+    data?:string;
+    time?: any;
 }
 
 export const MessageHandler = (
@@ -26,6 +28,7 @@ export const MessageHandler = (
     curMove: Colors | null,
     setCurMove: (color: Colors | null) => void,
     updateBoard: () => void,
+    setMsgArray: (update: (prevMsgArray: any[]) => any[]) => void,
     ) => {
     const moveAndChange = (msg: any, change: boolean) => {
         let selectedCell: Cell;
@@ -67,6 +70,7 @@ export const MessageHandler = (
         const msg: Message = JSON.parse(event.data);
         switch (msg.method) {
             case 'connection':
+                setMsgArray(prev => [...prev, {type: 'connect', user: msg.username}])
                 // if (msg.color === 'Black')
                     // setCurMove(Colors.WHITE);
                  break;
@@ -78,6 +82,15 @@ export const MessageHandler = (
                 break;
             case 'moveAndChange':
                 moveAndChange(msg, true)
+                break;
+            case 'message':
+                setMsgArray(prev => [...prev, {
+                    type: 'message',
+                    user: msg.username,
+                    text: msg.data,
+                    time: {hour: msg.time.hour, minute: msg.time.minute}
+                }])
+                break;
         }
     }
 }

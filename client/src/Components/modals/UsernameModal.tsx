@@ -4,7 +4,6 @@ import GameState from "../../Store/GameState";
 import "../../Resources/Styles/UsernameModal.css"
 import {SendMessage} from "../../Handlers/SendMessage";
 import {useParams} from "react-router-dom";
-import {Colors} from "../../Models/Colors";
 
 interface UsernameModal {
     modalActive: boolean;

@@ -9,6 +9,7 @@ class GameState {
     _socket: any;
     _session: string = "";
     _winner: Colors | null = null;
+    _msgArray: Array<any> = [];
 
     constructor() {
         makeAutoObservable(this)
@@ -32,6 +33,10 @@ class GameState {
 
     setSession(id: string){
         this._session = id;
+    }
+
+    pushMessage(data: any) {
+        this._msgArray.push(data);
     }
 
 }
