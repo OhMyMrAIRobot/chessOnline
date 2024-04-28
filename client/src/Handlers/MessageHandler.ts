@@ -71,7 +71,10 @@ export const MessageHandler = (
                     // setCurMove(Colors.WHITE);
                  break;
             case 'move':
-                moveAndChange(msg, false)
+                moveAndChange(msg, false);
+                const checkColor = curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE
+                if (curMove)
+                    if (board.checkMate(checkColor)) console.log(curMove + 'lose')
                 break;
             case 'moveAndChange':
                 moveAndChange(msg, true)

@@ -32,6 +32,30 @@ export class Board {
         return this._cells[y][x];
     }
 
+    checkMate(color: Colors): boolean {
+        const king = this.getKing(color);
+        if (!king.isCellUnderAttack(king, color)) {
+            return false;
+        }
+        for (const row of this._cells) {
+            for (const cell of row) {
+                const figure = cell._figure;
+                if (figure && figure._color === color) {
+                    for (let i = 0; i < 8; i++) {
+                        for (let j = 0; j < 8; j++) {
+                            const targetCell = this.getCell(i, j);
+                            if (figure.canMove(targetCell)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     getKing(color: Colors): Cell {
         let result: Cell = new Cell(this, 0, 0, Colors.WHITE, null);
         for (let i = 0; i < this._cells.length; i++){
