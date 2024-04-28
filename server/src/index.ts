@@ -35,7 +35,6 @@ app.post('/createGame', (req, res) => {
 app.get('/getGame', (req, res) => {
     try{
         const id: any = req.query.id;
-        console.log(id);
         if (Games.includes(id)) {
             return res.status(200).json({message: 'Room exists'})
         } else
@@ -48,6 +47,7 @@ app.get('/getGame', (req, res) => {
 wss.on('connection', (ws: WebSocketWithId) => {
     ws.on('message', (msg: any) => {
         msg = JSON.parse(msg);
+        console.log(msg);
         switch (msg.method) {
             case 'connection':
                 connectionHandler(ws, msg);

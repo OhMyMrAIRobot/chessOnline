@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {Colors} from "../models/Colors";
+import {Colors} from "../Models/Colors";
 
 export {}
 

@@ -1,8 +1,8 @@
 import {Figure, FigureNames} from "./Figure";
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import blackImg from "../../resources/images/kosal/black-knight.svg";
-import whiteImg from "../../resources/images/kosal/white-knight.svg";
+import blackImg from "../../Resources/Images/kosal/black-knight.svg";
+import whiteImg from "../../Resources/Images/kosal/white-knight.svg";
 
 export class Knight extends Figure {
     constructor(color: Colors, cell: Cell) {

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 // import '../Style/Chat.css'
 // import {useParams} from "react-router-dom";
-// import {sendMessage} from "../handlers/sendMessage";
+// import {sendMessage} from "../Handlers/sendMessage";
 //
 // const ChangeFormat =(min) => {
 //     if (min < 10)

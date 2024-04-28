@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Board} from "../models/Board";
+import {Board} from "../Models/Board";
 import CellComponent from "./CellComponent";
-import {Cell} from "../models/Cell";
-import {SendMessage} from "../handlers/SendMessage";
+import {Cell} from "../Models/Cell";
+import {SendMessage} from "../Handlers/SendMessage";
 import {useParams} from "react-router-dom";
 import GameState from "../store/GameState";
-import {Colors} from "../models/Colors";
-import {FigureNames} from "../models/figures/Figure";
+import {Colors} from "../Models/Colors";
+import {FigureNames} from "../Models/figures/Figure";
 
 interface BoardProps {
     board: Board;
@@ -31,12 +31,10 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
         if ((selectedCell && (selectedCell === cell)))
             setSelectedCell(null);
         else if (selectedCell && (selectedCell !== cell) && selectedCell._figure?.canMove(cell)){
-            if (selectedCell._figure?._name === FigureNames.PAWN) {
-                if (cell._y === 0) {
-                    setSelectedCellOut(selectedCell);
-                    setCell(cell);
-                    setFigureModalActive(true);
-                }
+            if (selectedCell._figure?._name === FigureNames.PAWN && cell._y === 0) {
+                setSelectedCellOut(selectedCell);
+                setCell(cell);
+                setFigureModalActive(true);
             } else {
                 SendMessage(GameState._socket, {
                     id: params.id,

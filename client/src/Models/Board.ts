@@ -6,7 +6,7 @@ import {Queen} from "./figures/Queen";
 import {Bishop} from "./figures/Bishop";
 import {Knight} from "./figures/Knight";
 import {Rook} from "./figures/Rook";
-import {Figure} from "./figures/Figure";
+import {Figure, FigureNames} from "./figures/Figure";
 import GameState from "../store/GameState";
 import gameState from "../store/GameState";
 
@@ -32,9 +32,23 @@ export class Board {
         return this._cells[y][x];
     }
 
+    getKing(color: Colors): Cell {
+        let result: Cell = new Cell(this, 0, 0, Colors.WHITE, null);
+        for (let i = 0; i < this._cells.length; i++){
+            const row = this._cells[i];
+            row.forEach((cell: Cell) => {
+                if (cell._figure?._name === FigureNames.KING && cell._figure?._color === color){
+                    result = cell;
+                }
+            })
+        }
+
+        return result;
+    }
+
     private addPawns() {
         for (let i = 0; i < 8; i++) {
-            const whitePawn = GameState._color === Colors.WHITE ? 1 : 6;
+            const whitePawn = GameState._color === Colors.WHITE ? 6 : 1;
             const blackPawn = 7 - whitePawn;
 
             new Pawn(Colors.BLACK, this.getCell(i, blackPawn));
@@ -94,12 +108,12 @@ export class Board {
     }
 
     public addFigures() {
-    //    this.addKings();
+       this.addKings();
         this.addPawns();
-        // this.addQueens();
-        // this.addBishops();
-        // this.addKnights();
-        // this.addRooks();
+        this.addQueens();
+        this.addBishops();
+        this.addKnights();
+        this.addRooks();
     }
 
     public highlightCells(selectedCell: Cell | null)  {

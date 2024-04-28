@@ -1,8 +1,8 @@
 import React, {FC, useRef} from 'react';
 import Modal from "./Modal";
 import GameState from "../../store/GameState";
-import "../../resources/styles/UsernameModal.css"
-import {SendMessage} from "../../handlers/SendMessage";
+import "../../Resources/Styles/UsernameModal.css"
+import {SendMessage} from "../../Handlers/SendMessage";
 import {useParams} from "react-router-dom";
 
 interface UsernameModal {

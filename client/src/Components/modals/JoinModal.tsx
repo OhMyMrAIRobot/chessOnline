@@ -1,7 +1,7 @@
 import React, {FC, useRef} from 'react';
 import Modal from "./Modal";
-import "../../resources/styles/JoinModal.css"
-import {ValidateGameHandler} from "../../handlers/ValidateGameHandler";
+import "../../Resources/Styles/JoinModal.css"
+import {ValidateGameHandler} from "../../Handlers/ValidateGameHandler";
 
 interface JoinModal {
     modalActive: boolean;

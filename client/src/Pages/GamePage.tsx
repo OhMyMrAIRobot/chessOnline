@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import BoardComponent from "../components/BoardComponent";
-import LostFigures from "../components/LostFigures";
-import {Board} from "../models/Board";
-import {Colors} from "../models/Colors";
+import BoardComponent from "../Components/BoardComponent";
+import LostFigures from "../Components/LostFigures";
+import {Board} from "../Models/Board";
+import {Colors} from "../Models/Colors";
 import {useNavigate, useParams} from "react-router-dom";
 import GameState from "../store/GameState";
-import ChooseFigure from "../components/modals/ChooseFigureModal";
-import {Cell} from "../models/Cell";
-import {MessageHandler} from "../handlers/MessageHandler";
-import {ValidateGameHandler} from "../handlers/ValidateGameHandler";
-import UsernameModal from "../components/modals/UsernameModal";
+import ChooseFigure from "../Components/modals/ChooseFigureModal";
+import {Cell} from "../Models/Cell";
+import {MessageHandler} from "../Handlers/MessageHandler";
+import {ValidateGameHandler} from "../Handlers/ValidateGameHandler";
+import UsernameModal from "../Components/modals/UsernameModal";
+import {SendMessage} from "../Handlers/SendMessage";
 
 const GamePage = () => {
     const [board, setBoard] = useState(new Board());
@@ -28,7 +29,6 @@ const GamePage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(params);
         ValidateGameHandler(params.id).then(result => {
             if (!result || !(params.color === 'White' || params.color === 'Black'))
                 navigate(`/`)
@@ -39,8 +39,10 @@ const GamePage = () => {
         GameState.setSocket(socket)
         GameState.setColor(params.color === 'White' ? Colors.WHITE : Colors.BLACK);
         socket.onopen = () => {
+            SendMessage(GameState._socket, {method: 'connection', id: params.id, username: '123', color: params.color});
             board.initCells();
             board.addFigures();
+            setCurMove(Colors.WHITE);
         };
     }, [])
 
@@ -51,10 +53,10 @@ const GamePage = () => {
 
     return (
         <div className="app">
-            <UsernameModal
-                modalActive={usernameModalActive}
-                setModalActive={setUsernameModalActive}
-            />
+            {/*<UsernameModal*/}
+            {/*    modalActive={usernameModalActive}*/}
+            {/*    setModalActive={setUsernameModalActive}*/}
+            {/*/>*/}
             <ChooseFigure
                 modalActive={figureModalActive}
                 setModalActive={setFigureModalActive}

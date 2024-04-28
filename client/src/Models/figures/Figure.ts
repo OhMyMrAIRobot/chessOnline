@@ -1,6 +1,6 @@
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
-import img from "../../resources/images/black-knight.png"
+import img from "../../Resources/Images/black-knight.png"
 
 export enum FigureNames{
     FIGURE = "Фигура",
@@ -37,6 +37,23 @@ export class Figure{
     canMove(target: Cell) : boolean {
         if (target._figure?._color === this._color) // same color
             return false;
+        const king = target._board.getKing(this._color);
+        if (king.isCellUnderAttack(king, this._color)) {
+            const tmpFigure = target._figure;
+            target._figure = this;
+            this._cell._figure = null;
+
+            if (!king.isCellUnderAttack(king, this._color)) {
+                target._figure = tmpFigure;
+                this._cell._figure = this;
+                return true;
+            }
+
+            target._figure = tmpFigure;
+            this._cell._figure = this;
+            return false;
+        }
+
         return true
     }
 

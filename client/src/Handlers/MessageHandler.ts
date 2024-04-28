@@ -1,12 +1,12 @@
-import {Cell} from "../models/Cell";
-import {Board} from "../models/Board";
-import {Colors} from "../models/Colors";
+import {Cell} from "../Models/Cell";
+import {Board} from "../Models/Board";
+import {Colors} from "../Models/Colors";
 import GameState from "../store/GameState";
-import {Queen} from "../models/figures/Queen";
-import {Bishop} from "../models/figures/Bishop";
-import {Knight} from "../models/figures/Knight";
-import {Pawn} from "../models/figures/Pawn";
-import {Rook} from "../models/figures/Rook";
+import {Queen} from "../Models/figures/Queen";
+import {Bishop} from "../Models/figures/Bishop";
+import {Knight} from "../Models/figures/Knight";
+import {Pawn} from "../Models/figures/Pawn";
+import {Rook} from "../Models/figures/Rook";
 
 interface Message {
     method: string;
@@ -67,9 +67,9 @@ export const MessageHandler = (
         const msg: Message = JSON.parse(event.data);
         switch (msg.method) {
             case 'connection':
-                if (msg.color === 'Black')
-                    setCurMove(Colors.WHITE);
-                break;
+                // if (msg.color === 'Black')
+                    // setCurMove(Colors.WHITE);
+                 break;
             case 'move':
                 moveAndChange(msg, false)
                 break;
