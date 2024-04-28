@@ -42,8 +42,8 @@ export class Figure{
             const tmpFigure = target._figure;
             target._figure = this;
             this._cell._figure = null;
-
-            if (!king.isCellUnderAttack(king, this._color)) {
+            const newKing = target._board.getKing(this._color);
+            if (!king.isCellUnderAttack(newKing, this._color)) {
                 target._figure = tmpFigure;
                 this._cell._figure = this;
                 return true;
