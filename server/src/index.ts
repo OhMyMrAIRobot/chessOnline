@@ -36,9 +36,9 @@ app.get('/getGame', (req, res) => {
     try{
         const id: any = req.query.id;
         if (Games.includes(id)) {
-            return res.status(200).json({message: 'Room exists'})
+            return res.status(200).json({message: 'Game exists'})
         } else
-            return res.status(404).json({message: 'Room doesn\'t exist'})
+            return res.status(404).json({message: 'Game doesn\'t exist'})
     } catch (e) {
         return res.status(500).json({message: e})
     }

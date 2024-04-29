@@ -19,21 +19,21 @@ const CreateMessage = (message: any, chatContainer: HTMLElement) => {
     chatContainer.appendChild(messageElement);
 
     let messageHeader = document.createElement('div');
-    messageHeader.className = "msg_header";
+    messageHeader.className = "msgHeader";
     messageElement.appendChild(messageHeader);
 
     let authorSpan = document.createElement('span');
-    authorSpan.className = "msg_author";
+    authorSpan.className = "msgAuthor";
     message.user === GameState._username ? authorSpan.textContent = "You" : authorSpan.textContent = message.user;
     messageHeader.appendChild(authorSpan);
 
     let timeSpan = document.createElement('span');
-    timeSpan.className = "msg_time";
+    timeSpan.className = "msgTime";
     timeSpan.textContent = message.time.hour + ":" + ChangeFormat(message.time.minute);
     messageHeader.appendChild(timeSpan);
 
     let messageText = document.createElement('div');
-    messageText.className = "msg_text";
+    messageText.className = "msgText";
     messageText.textContent =  message.text;
     messageElement.appendChild(messageText);
 }
@@ -41,11 +41,11 @@ const CreateMessage = (message: any, chatContainer: HTMLElement) => {
 // Системное сообщение
 const ConnectionMessage = (message: any, chatContainer: HTMLElement) => {
     let messageElement = document.createElement('div');
-    messageElement.className = "msg_connect_container";
+    messageElement.className = "msgConnectContainer";
     chatContainer.appendChild(messageElement);
 
     let nameSpan = document.createElement('span');
-    nameSpan.className = "msg_connect";
+    nameSpan.className = "msgConnect";
     message.type === 'connect' ?
         nameSpan.textContent = `User ${message.user} has connected!`
         :
@@ -61,13 +61,13 @@ interface Chat {
 const Chat:FC<Chat> = ({msgArray}) => {
 
     const chatContainer: HTMLElement | null = document.getElementById('Chat');
-    if (chatContainer) chatContainer.innerHTML = '';
     const inputRef = useRef<HTMLInputElement | null>(null)
     const chatRef = useRef<HTMLDivElement | null>(null)
 
     // обновление сообщений
     useEffect(() => {
         if (chatContainer) {
+            if (chatContainer) chatContainer.innerHTML = '';
             msgArray.forEach((message) => {
                 if (message.type === 'message')
                     CreateMessage(message, chatContainer);
@@ -103,14 +103,14 @@ const Chat:FC<Chat> = ({msgArray}) => {
                 if (e.key === 'Enter' && inputRef.current && inputRef.current.value !== "") sendMessageHandler()
             }}
             className="chat">
-            <div className="msg_container" id="Chat"></div>
-            <div className="send_container">
-                <input placeholder="Enter" className="msg_input" ref={inputRef} type='text'></input>
+            <div className="msgContainer" id="Chat"></div>
+            <div className="sendContainer">
+                <input placeholder="Enter" className="msgInput" ref={inputRef} type='text'></input>
                 <button
                     onClick={() => {
                         sendMessageHandler()
                     }}
-                    className="send_button">Send
+                    className="sendButton">Send
                 </button>
             </div>
         </div>

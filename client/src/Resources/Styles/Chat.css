@@ -12,7 +12,7 @@
     margin-left: 50px;
 }
 
-.msg_container{
+.msgContainer{
     height: 90%;
     width: 100%;
     max-height: 90%;
@@ -20,7 +20,7 @@
     padding: 5px;
 }
 
-.send_container{
+.sendContainer{
     height: 10%;
     margin-top: auto;
     width: 100%;
@@ -32,7 +32,7 @@
     border-top: 1px solid grey;
 }
 
-.send_button{
+.sendButton{
     height: 65%;
     width: 25%;
     border-radius: 7px;
@@ -43,7 +43,7 @@
     background-color: #f6f6f6;
 }
 
-.msg_input{
+.msgInput{
     height: 65%;
     font-size: 18px;
     width: 70%;
@@ -70,40 +70,40 @@
     margin-top: 5px;
 }
 
-.msg_header{
+.msgHeader{
     display: flex;
     justify-content: space-between;
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.msg_author{
+.msgAuthor{
     font-weight: bold;
     font-size: 18px;
 }
 
-.msg_time{
+.msgTime{
     font-size: 12px;
 }
 
-.msg_text{
+.msgText{
     padding: 5px;
     max-width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
-.msg_connect_container{
+.msgConnectContainer{
     display: flex;
     justify-content: center;
     margin-top: 10px;
 }
 
-.msg_connect_container:first-child{
+.msgConnectContainer:first-child{
     margin-top: 5px;
 }
 
-.msg_connect{
+.msgConnect{
     font-size: 16px;
     font-weight: bold;
 }

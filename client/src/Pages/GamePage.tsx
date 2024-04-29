@@ -64,6 +64,7 @@ const GamePage = () => {
 
     return (
         <div className="app">
+            <h3>Your move</h3>
             <UsernameModal modalActive={usernameModalActive} setModalActive={setUsernameModalActive}/>
             <ChooseFigureModal
                 modalActive={figureModalActive}

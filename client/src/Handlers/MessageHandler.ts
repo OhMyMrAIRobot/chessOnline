@@ -71,8 +71,9 @@ export const MessageHandler = (
         switch (msg.method) {
             case 'connection':
                 setMsgArray(prev => [...prev, {type: 'connect', user: msg.username}])
-                // if (msg.color === 'Black')
-                    // setCurMove(Colors.WHITE);
+                if (msg.color === 'black'){
+                    setCurMove(Colors.WHITE);
+                }
                  break;
             case 'move':
                 moveAndChange(msg, false);

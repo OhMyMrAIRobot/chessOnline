@@ -37,24 +37,22 @@ export class Figure{
     canMove(target: Cell) : boolean {
         if (target._figure?._color === this._color) // same color
             return false;
-        const king = target._board.getKing(this._color);
-        if (king.isCellUnderAttack(king, this._color)) {
-            const tmpFigure = target._figure;
-            target._figure = this;
-            this._cell._figure = null;
-            const newKing = target._board.getKing(this._color);
-            if (!king.isCellUnderAttack(newKing, this._color)) {
-                target._figure = tmpFigure;
-                this._cell._figure = this;
-                return true;
-            }
 
+        // check
+        const king = target._board.getKing(this._color);
+        const tmpFigure = target._figure;
+        target._figure = this;
+        this._cell._figure = null;
+        const newKing = target._board.getKing(this._color);
+        if (!king.isCellUnderAttack(newKing, this._color)) {
             target._figure = tmpFigure;
             this._cell._figure = this;
-            return false;
+            return true;
         }
 
-        return true
+        target._figure = tmpFigure;
+        this._cell._figure = this;
+        return false;
     }
 
     canPawnAttack(enemy: boolean, target: Cell): boolean {

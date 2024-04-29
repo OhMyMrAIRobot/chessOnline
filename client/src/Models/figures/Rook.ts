@@ -5,6 +5,7 @@ import blackImg from "../../Resources/Images/kosal/black-rook.svg";
 import whiteImg from "../../Resources/Images/kosal/white-rook.svg";
 
 export class Rook extends Figure {
+    _isFirstMove: boolean = true;
     constructor(color: Colors, cell: Cell) {
         super(color, cell);
         this._img = color === Colors.BLACK ? blackImg : whiteImg;
@@ -23,5 +24,10 @@ export class Rook extends Figure {
 
     canAttack(target: Cell): boolean {
         return super.canAttack(target) && (this._cell.isEmptyVertical(target) || this._cell.isEmptyHorizontal(target));
+    }
+
+    moveFigure(target: Cell): void {
+        super.moveFigure(target);
+        this._isFirstMove = false;
     }
 }
