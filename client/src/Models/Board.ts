@@ -133,7 +133,7 @@ export class Board {
 
     public addFigures() {
         this.addKings();
-        this.addQueens();
+       // this.addQueens();
         this.addRooks();
         // this.addKnights();
         // this.addPawns();

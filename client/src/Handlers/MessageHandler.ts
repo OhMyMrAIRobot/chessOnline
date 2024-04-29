@@ -7,6 +7,7 @@ import {Bishop} from "../Models/figures/Bishop";
 import {Knight} from "../Models/figures/Knight";
 import {Pawn} from "../Models/figures/Pawn";
 import {Rook} from "../Models/figures/Rook";
+import {King} from "../Models/figures/King";
 
 interface Message {
     method: string;
@@ -30,6 +31,7 @@ export const MessageHandler = (
     updateBoard: () => void,
     setMsgArray: (update: (prevMsgArray: any[]) => any[]) => void,
     ) => {
+
     const moveAndChange = (msg: any, change: boolean) => {
         let selectedCell: Cell;
         let cell: Cell;
@@ -66,13 +68,40 @@ export const MessageHandler = (
         }
     }
 
+    const moveRookAndKing = (oldRookCell: Cell, oldKingCell: Cell, newRookCell: Cell, newKingCell: Cell, rookColor: Colors) => {
+        oldRookCell._figure = null;
+        oldKingCell._figure = null;
+        newRookCell._figure = new Rook(rookColor, newRookCell);
+        newKingCell._figure = new King(rookColor, newKingCell);
+    };
+
+    const leftRook = (color: Colors) => {
+        const rookColor = color === Colors.WHITE ? Colors.WHITE : Colors.BLACK;
+
+        if (GameState._color === Colors.WHITE) {
+            if (color === Colors.WHITE) {
+                moveRookAndKing(board.getCell(0, 7), board.getCell(4, 7), board.getCell(3, 7), board.getCell(2, 7), rookColor);
+            } else {
+                moveRookAndKing(board.getCell(7, 0), board.getCell(4, 0), board.getCell(5, 0), board.getCell(6, 0), rookColor);
+            }
+        } else {
+            if (color === Colors.WHITE) {
+                moveRookAndKing(board.getCell(7, 0), board.getCell(3, 0), board.getCell(4, 0), board.getCell(5, 0), rookColor);
+            } else {
+                moveRookAndKing(board.getCell(0, 7), board.getCell(3, 7), board.getCell(2, 7), board.getCell(1, 7), rookColor);
+            }
+        }
+        updateBoard();
+        setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+    };
+
     socket.onmessage = (event: MessageEvent) => {
         const msg: Message = JSON.parse(event.data);
         switch (msg.method) {
             case 'connection':
                 setMsgArray(prev => [...prev, {type: 'connect', user: msg.username}])
                 if (msg.color === 'black'){
-                    setCurMove(Colors.WHITE);
+                    setCurMove(Colors.BLACK);
                 }
                  break;
             case 'move':
@@ -91,6 +120,10 @@ export const MessageHandler = (
                     text: msg.data,
                     time: {hour: msg.time.hour, minute: msg.time.minute}
                 }])
+                break;
+            case 'leftCastle':
+                console.log(msg.color);
+                leftRook(msg.color === 'white' ? Colors.WHITE : Colors.BLACK);
                 break;
         }
     }

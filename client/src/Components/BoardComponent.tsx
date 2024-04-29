@@ -3,10 +3,10 @@ import {Board} from "../Models/Board";
 import CellComponent from "./CellComponent";
 import {Cell} from "../Models/Cell";
 import {SendMessage} from "../Handlers/SendMessage";
-import {useParams} from "react-router-dom";
 import GameState from "../Store/GameState";
 import {Colors} from "../Models/Colors";
 import {FigureNames} from "../Models/figures/Figure";
+import {King} from "../Models/figures/King";
 
 interface BoardProps {
     board: Board;
@@ -33,7 +33,17 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
                 setSelectedCellOut(selectedCell);
                 setCell(cell);
                 setFigureModalActive(true);
-            } else {
+            } else if (selectedCell._figure?._name === FigureNames.KING && (cell._y === 7 && cell._x === (GameState._color === Colors.WHITE ? 2 : 1) && (selectedCell._figure as King).canLeftCastle(cell)
+            ))
+            {
+                SendMessage(GameState._socket, {
+                    id: GameState._session,
+                    color: GameState._color,
+                    method: 'leftCastle',
+                })
+            }
+
+            else {
                 SendMessage(GameState._socket, {
                     id: GameState._session,
                     method: 'move',

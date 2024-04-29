@@ -59,7 +59,6 @@ export class King extends Figure {
 
         const figure = board._cells[7][0]._figure;
         if (figure?._name === FigureNames.ROOK && figure._color === this._color){
-            console.log('found')
             const leftRook = figure as Rook;
             if (!leftRook._isFirstMove){
                 return false;

@@ -61,6 +61,9 @@ wss.on('connection', (ws: WebSocketWithId) => {
             case 'moveAndChange':
                 broadcast(ws, msg);
                 break;
+            case 'leftCastle':
+                broadcast(ws,msg);
+                break;
         }
     });
 });
