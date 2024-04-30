@@ -133,11 +133,11 @@ export class Board {
 
     public addFigures() {
         this.addKings();
-       // this.addQueens();
+        this.addQueens();
         this.addRooks();
-        // this.addKnights();
-        // this.addPawns();
-        // this.addBishops();
+        this.addKnights();
+        this.addPawns();
+        this.addBishops();
     }
 
     public highlightCells(selectedCell: Cell | null)  {

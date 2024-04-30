@@ -14,12 +14,16 @@ const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, jumpToGame}) => 
     const inputRef = useRef<HTMLInputElement>(null);
 
     const joinGame = async () => {
-        if (inputRef.current) {
-            const isValid = await ValidateGameHandler(inputRef.current.value);
-            isValid ?
-                jumpToGame('Black', inputRef.current.value)
-                :
-                inputRef.current.style.borderColor = 'red';
+        const input = inputRef.current
+        if (input) {
+            ValidateGameHandler(inputRef.current.value)
+                .then(() => {
+                    jumpToGame('Black', input.value);
+                })
+                .catch((e) => {
+                    input.style.borderColor = 'red';
+                    console.log(e);
+                })
         }
     }
 

@@ -15,10 +15,13 @@ const WelcomePage = () => {
     }
 
     const createGame = async () => {
-        const id = await CreateGameHandler();
-        if (id){
-            jumpToGame('White', id);
-        }
+        CreateGameHandler()
+            .then((id) => {
+                jumpToGame('White', id);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     }
 
     return (

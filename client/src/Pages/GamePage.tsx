@@ -39,11 +39,13 @@ const GamePage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        ValidateGameHandler(params.id).then(result => {
-            if (!result || !(params.color === 'White' || params.color === 'Black'))
+        ValidateGameHandler(params.id)
+            .then(result => {
+                if (!result || !(params.color === 'White' || params.color === 'Black'))
+                    navigate(`/`)
+            })
+            .catch(() => {
                 navigate(`/`)
-        }).catch(() => {
-            navigate(`/`)
         })
 
         GameState.setSocket(socket)

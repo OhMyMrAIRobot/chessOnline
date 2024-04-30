@@ -23,9 +23,8 @@ const Games: Array<string> = [];
 
 app.post('/createGame', (req, res) => {
     try {
-        const id: any = req.query.id;
+        const id: string = req.body.id;
         Games.push(id);
-
         return res.status(200).json({message: "Game created"})
     } catch (e) {
         return res.status(500).json({message: e})
@@ -62,6 +61,9 @@ wss.on('connection', (ws: WebSocketWithId) => {
                 broadcast(ws, msg);
                 break;
             case 'leftCastle':
+                broadcast(ws,msg);
+                break;
+            case 'rightCastle':
                 broadcast(ws,msg);
                 break;
         }

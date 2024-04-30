@@ -33,17 +33,21 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
                 setSelectedCellOut(selectedCell);
                 setCell(cell);
                 setFigureModalActive(true);
-            } else if (selectedCell._figure?._name === FigureNames.KING && (cell._y === 7 && cell._x === (GameState._color === Colors.WHITE ? 2 : 1) && (selectedCell._figure as King).canLeftCastle(cell)
-            ))
+            } else if (selectedCell._figure?._name === FigureNames.KING && (cell._y === 7 && cell._x === (GameState._color === Colors.WHITE ? 2 : 1) && (selectedCell._figure as King).canLeftCastle(cell)))
             {
                 SendMessage(GameState._socket, {
                     id: GameState._session,
                     color: GameState._color,
                     method: 'leftCastle',
                 })
-            }
-
-            else {
+            } else if (selectedCell._figure?._name === FigureNames.KING && (cell._y === 7 && cell._x === (GameState._color === Colors.WHITE ? 6 : 5) && (selectedCell._figure as King).canRightCastle(cell)))
+            {
+                SendMessage(GameState._socket, {
+                    id: GameState._session,
+                    color: GameState._color,
+                    method: 'rightCastle',
+                })
+            } else {
                 SendMessage(GameState._socket, {
                     id: GameState._session,
                     method: 'move',

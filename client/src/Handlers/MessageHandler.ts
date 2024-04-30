@@ -101,7 +101,7 @@ export const MessageHandler = (
             case 'connection':
                 setMsgArray(prev => [...prev, {type: 'connect', user: msg.username}])
                 if (msg.color === 'black'){
-                    setCurMove(Colors.BLACK);
+                    setCurMove(Colors.WHITE);
                 }
                  break;
             case 'move':
@@ -122,8 +122,10 @@ export const MessageHandler = (
                 }])
                 break;
             case 'leftCastle':
-                console.log(msg.color);
                 leftRook(msg.color === 'white' ? Colors.WHITE : Colors.BLACK);
+                break;
+            case 'rightCastle':
+                console.log('right');
                 break;
         }
     }

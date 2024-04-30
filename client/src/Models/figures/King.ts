@@ -25,6 +25,10 @@ export class King extends Figure {
             return true;
         }
 
+        if (this.canRightCastle(target)) {
+            return true;
+        }
+
         if (Math.abs(target._x - this._cell._x) > 1 || Math.abs(target._y - this._cell._y) > 1) {
             return false;
         }
@@ -52,7 +56,7 @@ export class King extends Figure {
         return super.canAttack(target) && !(Math.abs(target._x - this._cell._x) > 1 || Math.abs(target._y - this._cell._y) > 1);
     }
 
-     canLeftCastle(target: Cell): boolean {
+    canLeftCastle(target: Cell): boolean {
         if (!this._isFirstMove)
             return false;
         const board = target._board;
@@ -66,10 +70,34 @@ export class King extends Figure {
         } else return false;
 
         if (!(target._y === 7 && target._x < 4 && target._x > (GameState._color === Colors.WHITE ? 1 : 0)))
-             return false;
+            return false;
 
-        for (let i = 1; i <= (GameState._color === Colors.WHITE ? 3 : 2); i++){
-            if (board._cells[7][i]._figure || target.isCellUnderAttack(board._cells[7][i], this._color)){
+        for (let i = 1; i <= (GameState._color === Colors.WHITE ? 4 : 3); i++){
+            if ((board._cells[7][i]._figure && board._cells[7][i]._figure?._name !== FigureNames.KING) || target.isCellUnderAttack(board._cells[7][i], this._color)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    canRightCastle(target: Cell): boolean {
+        if (!this._isFirstMove)
+            return false;
+
+        const board = target._board;
+        const figure = board._cells[7][7]._figure;
+        if (figure?._name === FigureNames.ROOK && figure._color === this._color){
+            const rightRook = figure as Rook;
+            if (!rightRook._isFirstMove){
+                return false;
+            }
+        } else return false;
+
+        if (!(target._y === 7 && target._x > (GameState._color === Colors.WHITE ? 4 : 3) && target._x <= 6))
+            return false;
+
+        for (let i = (GameState._color === Colors.WHITE ? 4 : 3); i <= 6; i++){
+            if ((board._cells[7][i]._figure && board._cells[7][i]._figure?._name !== FigureNames.KING) || target.isCellUnderAttack(board._cells[7][i], this._color)){
                 return false;
             }
         }

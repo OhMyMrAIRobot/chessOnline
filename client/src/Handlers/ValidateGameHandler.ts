@@ -1,10 +1,13 @@
 import axios from "axios";
 
-export const ValidateGameHandler = async (id?: string): Promise<boolean> => {
-    try {
-        const response = await axios.get(`http://localhost:8080/getGame?id=${id}`);
-        return response.status === 200;
-    } catch (error) {
-        return false;
-    }
+export const ValidateGameHandler = (id?: string): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:8080/getGame?id=${id}`)
+            .then((response) => {
+                resolve(true)
+            })
+            .catch(() => {
+                reject('No game with such id')
+            })
+    })
 }
