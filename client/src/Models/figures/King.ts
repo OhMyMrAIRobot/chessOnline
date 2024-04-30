@@ -93,7 +93,7 @@ export class King extends Figure {
             }
         } else return false;
 
-        if (!(target._y === 7 && target._x > (GameState._color === Colors.WHITE ? 4 : 3) && target._x <= 6))
+        if (!(target._y === 7 && target._x > (GameState._color === Colors.WHITE ? 4 : 3) && target._x <= (GameState._color === Colors.WHITE ? 6 : 5)))
             return false;
 
         for (let i = (GameState._color === Colors.WHITE ? 4 : 3); i <= 6; i++){

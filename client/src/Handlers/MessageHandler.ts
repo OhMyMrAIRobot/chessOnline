@@ -75,7 +75,7 @@ export const MessageHandler = (
         newKingCell._figure = new King(rookColor, newKingCell);
     };
 
-    const leftRook = (color: Colors) => {
+    const leftCastle = (color: Colors) => {
         const rookColor = color === Colors.WHITE ? Colors.WHITE : Colors.BLACK;
 
         if (GameState._color === Colors.WHITE) {
@@ -94,6 +94,25 @@ export const MessageHandler = (
         updateBoard();
         setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
     };
+
+    const rightCastle = (color: Colors) => {
+        const rookColor = color === Colors.WHITE ? Colors.WHITE : Colors.BLACK;
+        if (GameState._color === Colors.WHITE) {
+            if (color === Colors.WHITE) {
+                moveRookAndKing(board.getCell(7, 7), board.getCell(4, 7), board.getCell(5, 7), board.getCell(6, 7), rookColor);
+            } else {
+                moveRookAndKing(board.getCell(0, 0), board.getCell(4, 0), board.getCell(3, 0), board.getCell(2, 0), rookColor);
+            }
+        } else {
+            if (color === Colors.WHITE) {
+                moveRookAndKing(board.getCell(0, 0), board.getCell(3, 0), board.getCell(2, 0), board.getCell(1, 0), rookColor);
+            } else {
+                moveRookAndKing(board.getCell(7, 7), board.getCell(3, 7), board.getCell(4, 7), board.getCell(5, 7), rookColor);
+            }
+        }
+        updateBoard();
+        setCurMove(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+    }
 
     socket.onmessage = (event: MessageEvent) => {
         const msg: Message = JSON.parse(event.data);
@@ -122,10 +141,10 @@ export const MessageHandler = (
                 }])
                 break;
             case 'leftCastle':
-                leftRook(msg.color === 'white' ? Colors.WHITE : Colors.BLACK);
+                leftCastle(msg.color === 'white' ? Colors.WHITE : Colors.BLACK);
                 break;
             case 'rightCastle':
-                console.log('right');
+                rightCastle(msg.color === 'white' ? Colors.WHITE : Colors.BLACK);
                 break;
         }
     }

@@ -84,7 +84,7 @@ const connectionHandler = (ws: WebSocketWithId, msg: { id: number, data: any }) 
 };
 
 const PORT = 8080;
-
-server.listen(PORT, () => {
+const HOST = 'localhost'
+server.listen(PORT, HOST,  () => {
     console.log(`Server is running on port ${PORT}`);
 });

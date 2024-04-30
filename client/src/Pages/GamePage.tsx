@@ -55,7 +55,7 @@ const GamePage = () => {
         socket.onopen = () => {
             board.initCells();
             board.addFigures();
-            setCurMove(Colors.WHITE);
+        //    setCurMove(Colors.BLACK);
         };
     }, [])
 
