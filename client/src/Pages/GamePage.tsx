@@ -5,14 +5,15 @@ import {Board} from "../Models/Board";
 import {Colors} from "../Models/Colors";
 import {useNavigate, useParams} from "react-router-dom";
 import GameState from "../Store/GameState";
+import gameState from "../Store/GameState";
 import ChooseFigureModal from "../Components/modals/ChooseFigureModal";
 import {Cell} from "../Models/Cell";
 import {MessageHandler} from "../Handlers/MessageHandler";
 import {ValidateGameHandler} from "../Handlers/ValidateGameHandler";
 import UsernameModal from "../Components/modals/UsernameModal";
-import gameState from "../Store/GameState";
 import EndGameModal from "../Components/modals/EndGameModal";
 import Chat from "../Components/ChatComponent";
+import SideBar from "../Components/SideBar";
 
 const GamePage = () => {
     // Modals
@@ -66,7 +67,6 @@ const GamePage = () => {
 
     return (
         <div className="app">
-            <h3>Your move</h3>
             <UsernameModal modalActive={usernameModalActive} setModalActive={setUsernameModalActive}/>
             <ChooseFigureModal
                 modalActive={figureModalActive}
@@ -75,24 +75,28 @@ const GamePage = () => {
                 cell={cell}
             />
             <EndGameModal modalActive={endModalActive} setModalActive={setEndModalActive} isWin={GameState._winner === GameState._color}/>
-            <div>
+            <SideBar curMove={curMove}/>
+
+            <div style={{display:'flex', flexDirection:'column', gap:'10px'}}>
                 <LostFigures
-                    title={"Белые фигуры"}
-                    figures={board._lostWhiteFigures}
+                    figures={GameState._color === Colors.WHITE ? board._lostBlackFigures : board._lostWhiteFigures}
                 />
+                <div style={{border:'2px solid black'}}>
+                    <BoardComponent
+                        board={board}
+                        updateBoard={updateBoard}
+                        curMove={curMove}
+                        setFigureModalActive={setFigureModalActive}
+                        setSelectedCellOut={setSelectedCell}
+                        setCell={setCell}
+                    />
+                </div>
+
                 <LostFigures
-                    title={"Черные фигуры"}
-                    figures={board._lostBlackFigures}
+                    figures={GameState._color === Colors.WHITE ? board._lostWhiteFigures : board._lostBlackFigures}
                 />
             </div>
-            <BoardComponent
-                board={board}
-                updateBoard={updateBoard}
-                curMove={curMove}
-                setFigureModalActive={setFigureModalActive}
-                setSelectedCellOut={setSelectedCell}
-                setCell={setCell}
-            />
+
             <Chat msgArray={msgArray}/>
         </div>
     );

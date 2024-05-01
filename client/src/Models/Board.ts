@@ -26,6 +26,7 @@ export class Board {
             }
             this._cells.push(row);
         }
+
     }
 
     public getCell(x: number, y: number){
