@@ -5,7 +5,6 @@ import {Board} from "../Models/Board";
 import {Colors} from "../Models/Colors";
 import {useNavigate, useParams} from "react-router-dom";
 import GameState from "../Store/GameState";
-import gameState from "../Store/GameState";
 import ChooseFigureModal from "../Components/modals/ChooseFigureModal";
 import {Cell} from "../Models/Cell";
 import {MessageHandler} from "../Handlers/MessageHandler";
@@ -14,6 +13,7 @@ import UsernameModal from "../Components/modals/UsernameModal";
 import EndGameModal from "../Components/modals/EndGameModal";
 import Chat from "../Components/ChatComponent";
 import SideBar from "../Components/SideBar";
+import {autorun} from "mobx";
 
 const GamePage = () => {
     // Modals
@@ -33,8 +33,13 @@ const GamePage = () => {
     }, [curMove]);
 
     useEffect(() => {
-        if (gameState._winner) setEndModalActive(true);
-    }, [GameState._winner]);
+        autorun(() => {
+            if (GameState._winner) {
+                setEndModalActive(true);
+                setCurMove(null);
+            }
+        });
+    }, []);
 
     const params = useParams();
     const navigate = useNavigate();

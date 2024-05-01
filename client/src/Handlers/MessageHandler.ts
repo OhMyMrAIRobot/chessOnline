@@ -9,7 +9,7 @@ import {Pawn} from "../Models/figures/Pawn";
 import {Rook} from "../Models/figures/Rook";
 import {King} from "../Models/figures/King";
 
-interface Message {
+interface MessageProps {
     method: string;
     username?: string;
     color?: string;
@@ -115,7 +115,7 @@ export const MessageHandler = (
     }
 
     socket.onmessage = (event: MessageEvent) => {
-        const msg: Message = JSON.parse(event.data);
+        const msg: MessageProps = JSON.parse(event.data);
         switch (msg.method) {
             case 'connection':
                 setMsgArray(prev => [...prev, {type: 'connect', user: msg.username}])

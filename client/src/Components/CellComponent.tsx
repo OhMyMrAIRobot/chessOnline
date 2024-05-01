@@ -5,9 +5,11 @@ interface CellProps{
     cell: Cell;
     selected: boolean;
     click: (cell: Cell) => void;
+    digit: number | null;
+    letter: string | null;
 }
 
-const CellComponent: FC<CellProps> = ({cell, selected, click}) => {
+const CellComponent: FC<CellProps> = ({cell, selected, click, digit, letter}) => {
     return (
         <div
             className={["cell",
@@ -16,6 +18,9 @@ const CellComponent: FC<CellProps> = ({cell, selected, click}) => {
             ].join(' ')}
             onClick={() => click(cell)}
         >
+            {(digit !== null) && <span className={"cellDigit"}>{digit}</span>}
+            {(letter !== null) && <span className={"cellLetter"}>{letter}</span>}
+
             {cell._figure?._img && <img className="figure" src={cell._figure._img} alt={cell._figure._name}/>}
             {!cell._figure && cell._available && <div className={'available'}></div>}
         </div>

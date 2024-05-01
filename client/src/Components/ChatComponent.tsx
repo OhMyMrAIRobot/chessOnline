@@ -54,11 +54,11 @@ const ConnectionMessage = (message: any, chatContainer: HTMLElement) => {
     messageElement.appendChild(nameSpan);
 }
 
-interface Chat {
+interface ChatProps {
     msgArray: any[];
 }
 
-const Chat:FC<Chat> = ({msgArray}) => {
+const Chat:FC<ChatProps> = ({msgArray}) => {
 
     const chatContainer: HTMLElement | null = document.getElementById('Chat');
     const inputRef = useRef<HTMLInputElement | null>(null)

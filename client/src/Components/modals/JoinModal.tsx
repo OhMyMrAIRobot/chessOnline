@@ -3,13 +3,13 @@ import Modal from "./Modal";
 import "../../Resources/Styles/JoinModal.css"
 import {ValidateGameHandler} from "../../Handlers/ValidateGameHandler";
 
-interface JoinModal {
+interface JoinModalProps {
     modalActive: boolean;
     setModalActive: (bool: boolean) => void;
     jumpToGame: (color: string, id: string) => void;
 }
 
-const JoinModal: FC<JoinModal> = ({modalActive, setModalActive, jumpToGame}) => {
+const JoinModal: FC<JoinModalProps> = ({modalActive, setModalActive, jumpToGame}) => {
 
     const inputRef = useRef<HTMLInputElement>(null);
 

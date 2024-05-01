@@ -15,14 +15,14 @@ import blackRook from "../../Resources/Images/kosal/black-rook.svg"
 import {SendMessage} from "../../Handlers/SendMessage";
 import {Cell} from "../../Models/Cell";
 
-interface ChooseFigureModal {
+interface ChooseFigureModalProps {
     modalActive: boolean;
     selectedCell: Cell | null;
     cell: Cell | null;
     setModalActive: (active: boolean) => void;
 }
 
-const ChooseFigureModal: FC<ChooseFigureModal> = ({modalActive, setModalActive, selectedCell, cell}) => {
+const ChooseFigureModal: FC<ChooseFigureModalProps> = ({modalActive, setModalActive, selectedCell, cell}) => {
 
     const figures: Array<{figure: string, src: string}> = GameState._color === Colors.WHITE ? [
         {figure: 'Bishop', src: whiteBishop},
