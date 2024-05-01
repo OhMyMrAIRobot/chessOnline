@@ -26,7 +26,6 @@ export class Board {
             }
             this._cells.push(row);
         }
-
     }
 
     public getCell(x: number, y: number){
@@ -46,6 +45,7 @@ export class Board {
                         for (let j = 0; j < 8; j++) {
                             const targetCell = this.getCell(i, j);
                             if (figure.canMove(targetCell)) {
+                                console.log(figure)
                                 return false;
                             }
                         }
@@ -53,7 +53,6 @@ export class Board {
                 }
             }
         }
-
         return true;
     }
 
@@ -71,16 +70,6 @@ export class Board {
         return result;
     }
 
-    private addPawns() {
-        for (let i = 0; i < 8; i++) {
-            const whitePawn = GameState._color === Colors.WHITE ? 6 : 1;
-            const blackPawn = 7 - whitePawn;
-
-            new Pawn(Colors.BLACK, this.getCell(i, blackPawn));
-            new Pawn(Colors.WHITE, this.getCell(i, whitePawn));
-        }
-    }
-
     private addKings() {
         if (gameState._color === Colors.WHITE){
             new King(Colors.BLACK, this.getCell(4, 0));
@@ -89,7 +78,6 @@ export class Board {
             new King(Colors.BLACK, this.getCell(3, 7));
             new King(Colors.WHITE, this.getCell(3, 0));
         }
-
     }
 
     private addQueens() {
@@ -132,13 +120,28 @@ export class Board {
         new Rook(color2, this.getCell(7,7));
     }
 
+    private addPawns() {
+        for (let i = 0; i < 8; i++) {
+            const whitePawn: number = GameState._color === Colors.WHITE ? 6 : 1;
+            const blackPawn: number = 7 - whitePawn;
+
+            new Pawn(Colors.BLACK, this.getCell(i, blackPawn));
+            new Pawn(Colors.WHITE, this.getCell(i, whitePawn));
+        }
+    }
+
     public addFigures() {
         this.addKings();
+      //  this.getCell(5,1)._figure = new Queen(Colors.WHITE, this.getCell(5,1))
         //this.addQueens();
-        this.addRooks();
-        // this.addKnights();
-        // this.addPawns();
+        //this.addRooks();
+        //this.addKnights();
+        this.addPawns();
         // this.addBishops();
+
+        // for mate with only pawns & kings
+        new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6))
+     //   new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 6 : 1))
     }
 
     public highlightCells(selectedCell: Cell | null)  {
@@ -157,5 +160,76 @@ export class Board {
         newBoard._lostWhiteFigures = this._lostWhiteFigures;
         newBoard._lostBlackFigures = this._lostBlackFigures;
         return newBoard;
+    }
+
+    public moveRookAndKing = (oldRookCell: Cell, oldKingCell: Cell, newRookCell: Cell, newKingCell: Cell, rookColor: Colors) => {
+        oldRookCell._figure = null;
+        oldKingCell._figure = null;
+        newRookCell._figure = new Rook(rookColor, newRookCell);
+        newKingCell._figure = new King(rookColor, newKingCell);
+    };
+
+    public leftCastle = (color: Colors) => {
+        const rookColor = color === Colors.WHITE ? Colors.WHITE : Colors.BLACK;
+
+        if (GameState._color === Colors.WHITE) {
+            if (color === Colors.WHITE) {
+                this.moveRookAndKing(this.getCell(0, 7), this.getCell(4, 7), this.getCell(3, 7), this.getCell(2, 7), rookColor);
+            } else {
+                this.moveRookAndKing(this.getCell(7, 0), this.getCell(4, 0), this.getCell(5, 0), this.getCell(6, 0), rookColor);
+            }
+        } else {
+            if (color === Colors.WHITE) {
+                this.moveRookAndKing(this.getCell(7, 0), this.getCell(3, 0), this.getCell(4, 0), this.getCell(5, 0), rookColor);
+            } else {
+                this.moveRookAndKing(this.getCell(0, 7), this.getCell(3, 7), this.getCell(2, 7), this.getCell(1, 7), rookColor);
+            }
+        }
+    };
+
+    public rightCastle = (color: Colors) => {
+        const rookColor = color === Colors.WHITE ? Colors.WHITE : Colors.BLACK;
+        if (GameState._color === Colors.WHITE) {
+            if (color === Colors.WHITE) {
+                this.moveRookAndKing(this.getCell(7, 7), this.getCell(4, 7), this.getCell(5, 7), this.getCell(6, 7), rookColor);
+            } else {
+                this.moveRookAndKing(this.getCell(0, 0), this.getCell(4, 0), this.getCell(3, 0), this.getCell(2, 0), rookColor);
+            }
+        } else {
+            if (color === Colors.WHITE) {
+                this.moveRookAndKing(this.getCell(0, 0), this.getCell(3, 0), this.getCell(2, 0), this.getCell(1, 0), rookColor);
+            } else {
+                this.moveRookAndKing(this.getCell(7, 7), this.getCell(3, 7), this.getCell(4, 7), this.getCell(5, 7), rookColor);
+            }
+        }
+    }
+
+    public moveAndChange = (curMove: Colors, x0: number, y0: number, x1:number, y1:number, change: boolean, figure?: string) => {
+        let selectedCell: Cell;
+        let cell: Cell;
+            if (curMove === GameState._color){
+                selectedCell = this.getCell(x0, y0);
+                cell = this.getCell(x1, y1);
+            } else {
+                selectedCell = this.getCell(7 - x0, 7 - y0);
+                cell = this.getCell(7 - x1, 7 - y1);
+            }
+            selectedCell.moveFigure(cell);
+            if (change && cell._figure) {
+                switch (figure){
+                    case 'Bishop':
+                        cell._figure = new Bishop(cell._figure._color, cell);
+                        break;
+                    case 'Knight':
+                        cell._figure = new Knight(cell._figure._color, cell);
+                        break;
+                    case 'Queen':
+                        cell._figure = new Queen(cell._figure._color, cell);
+                        break;
+                    case 'Rook':
+                        cell._figure = new Rook(cell._figure._color, cell);
+                        break;
+                }
+            }
     }
 }

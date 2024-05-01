@@ -1,6 +1,7 @@
 import {Colors} from "../Colors";
 import {Cell} from "../Cell";
 import img from "../../Resources/Images/black-knight.png"
+import GameState from "../../Store/GameState";
 
 export enum FigureNames{
     FIGURE = "Фигура",
@@ -55,8 +56,8 @@ export class Figure{
         return false;
     }
 
-    canPawnAttack(enemy: boolean, target: Cell): boolean {
-        const direction = enemy ? 1 : -1;
+    canPawnAttack(target: Cell): boolean {
+        const direction = GameState._color === this._color ? -1 : 0;
         return target._y === this._cell._y + direction && (target._x === this._cell._x + 1 || target._x === this._cell._x - 1);
     }
 

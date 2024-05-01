@@ -29,7 +29,10 @@ const GamePage = () => {
     const [msgArray, setMsgArray] = useState<any[]>([])
 
     useEffect(() => {
-        MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray)
+        MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray);
+        if (curMove && board.checkMate(curMove))
+            GameState.setWinner(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE)
+
     }, [curMove]);
 
     useEffect(() => {

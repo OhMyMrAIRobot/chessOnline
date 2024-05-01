@@ -83,7 +83,7 @@ export class Cell{
             for (const cell of row) {
                 const figure = cell._figure;
                 if (figure && figure._color !== color) {
-                    if (figure._name === FigureNames.PAWN && figure.canPawnAttack(true, target)) {
+                    if (figure._name === FigureNames.PAWN && figure.canPawnAttack(target)) {
                         return true;
                     }
 

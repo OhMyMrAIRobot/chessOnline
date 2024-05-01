@@ -13,7 +13,6 @@ const ChangeFormat =(min: number):string => {
 
 // Сообщение от пользователя
 const CreateMessage = (message: any, chatContainer: HTMLElement) => {
-    console.log('new msg')
     let messageElement = document.createElement('div');
     message.user === GameState._username ? messageElement.className = "msg author" : messageElement.className = "msg"
     chatContainer.appendChild(messageElement);

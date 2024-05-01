@@ -8,8 +8,6 @@ import whiteQueen from "../../Resources/Images/kosal/white-queen.svg"
 import blackQueen from "../../Resources/Images/kosal/black-queen.svg"
 import whiteKnight from "../../Resources/Images/kosal/white-knight.svg"
 import blackKnight from "../../Resources/Images/kosal/black-knight.svg"
-import whitePawn from "../../Resources/Images/kosal/white-pawn.svg"
-import blackPawn from "../../Resources/Images/kosal/black-pawn.svg"
 import whiteRook from "../../Resources/Images/kosal/white-rook.svg"
 import blackRook from "../../Resources/Images/kosal/black-rook.svg"
 import {SendMessage} from "../../Handlers/SendMessage";
@@ -27,13 +25,11 @@ const ChooseFigureModal: FC<ChooseFigureModalProps> = ({modalActive, setModalAct
     const figures: Array<{figure: string, src: string}> = GameState._color === Colors.WHITE ? [
         {figure: 'Bishop', src: whiteBishop},
         {figure: 'Knight', src: whiteKnight},
-        {figure: 'Pawn', src: whitePawn},
         {figure: 'Queen', src: whiteQueen},
         {figure: 'Rook', src: whiteRook},
     ] : [
         {figure: 'Bishop', src: blackBishop},
         {figure: 'Knight', src: blackKnight},
-        {figure: 'Pawn', src: blackPawn},
         {figure: 'Queen', src: blackQueen},
         {figure: 'Rook', src: blackRook},
     ]
