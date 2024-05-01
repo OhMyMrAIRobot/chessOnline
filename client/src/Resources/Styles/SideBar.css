@@ -67,3 +67,27 @@
     color: #d30909;
     background-color: white;
 }
+
+.timerContainer {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.timerItem {
+    padding-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-bottom: 1px solid black;
+}
+
+.timerItem h2 {
+    font-weight: normal;
+}
+
+.timerImg {
+    width: 20px;
+    height: 20px;
+}

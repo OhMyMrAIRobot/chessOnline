@@ -1,15 +1,16 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {Colors} from "../Models/Colors";
 import GameState from "../Store/GameState";
-import gameState from "../Store/GameState";
+import timerImg from "../Resources/Images/timer.png"
+import "../Resources/Styles/SideBar.css"
 
 interface TimerProps {
     curMove: Colors | null;
 }
 
 const Timer: FC<TimerProps> = ({curMove}) => {
-    const [blackTime, setBlackTime] = useState(10);
-    const [whiteTime, setWhiteTime] = useState(10);
+    const [blackTime, setBlackTime] = useState(300);
+    const [whiteTime, setWhiteTime] = useState(300);
     const timer = useRef<null | ReturnType<typeof setInterval>>(null);
 
     useEffect(() => {
@@ -58,9 +59,17 @@ const Timer: FC<TimerProps> = ({curMove}) => {
     }, [blackTime, whiteTime]);
 
     return (
-        <div>
-            <h2>black - {blackTime}</h2>
-            <h2>white - {whiteTime}</h2>
+        <div className={"timerContainer"}>
+            <div className={"timerItem"}>
+                <img src={timerImg} alt={'timer'} className={"timerImg"}/>
+                <h2>Black: {Math.floor(blackTime / 60)}:{(blackTime % 60).toString().padStart(2, '0')}</h2>
+            </div>
+            <div className={"timerItem"}>
+                <img src={timerImg} alt={'timer'} className={"timerImg"}/>
+                <h2>White: {Math.floor(whiteTime / 60)}:{(whiteTime % 60).toString().padStart(2, '0')}</h2>
+            </div>
+
+
         </div>
     );
 };
