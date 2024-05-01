@@ -29,7 +29,7 @@ const Timer: FC<TimerProps> = ({curMove}) => {
     function decrementBlackTimer() {
         setBlackTime(prevState => {
             const newTime = prevState - 1;
-            if (newTime <= 0) {
+            if (newTime <= 0 || GameState._winner) {
                 if (timer.current)
                     clearInterval(timer.current);
                 return newTime;
@@ -41,7 +41,7 @@ const Timer: FC<TimerProps> = ({curMove}) => {
     function decrementWhiteTimer() {
         setWhiteTime(prevState => {
             const newTime = prevState - 1;
-            if (newTime <= 0) {
+            if (newTime <= 0 || GameState._winner) {
                 if (timer.current)
                     clearInterval(timer.current);
                 return newTime;

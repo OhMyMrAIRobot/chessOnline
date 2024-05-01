@@ -3,12 +3,21 @@ import "../Resources/Styles/SideBar.css"
 import GameState from "../Store/GameState";
 import {Colors} from "../Models/Colors";
 import Timer from "./Timer";
+import {SendMessage} from "../Handlers/SendMessage";
 
 interface SideBarProps {
     curMove: Colors | null,
 }
 
 const SideBar: FC<SideBarProps> = ({curMove}) => {
+
+    const giveUpHandler = () => {
+        SendMessage(GameState._socket, {
+            method: 'giveUp',
+            id: GameState._session,
+            color: GameState._color,
+        })
+    }
 
     const title = () => {
         if (GameState._winner) {
@@ -19,7 +28,6 @@ const SideBar: FC<SideBarProps> = ({curMove}) => {
                 {GameState._color === curMove ? 'Your move' : 'Opponent move'}</h3>
         } else
             return <h3 className="red">Waiting for opponent</h3>
-
     }
 
     return (
@@ -29,8 +37,12 @@ const SideBar: FC<SideBarProps> = ({curMove}) => {
             <Timer curMove={curMove}/>
 
             <div className="sidebarButtons">
-            <button className="sidebarButton draw">Offer a draw</button>
-                <button className="sidebarButton giveUp">Give up</button>
+                <button className="sidebarButton draw">Offer a draw</button>
+
+                <button
+                    className="sidebarButton giveUp"
+                    onClick={() => giveUpHandler()}
+                >Give up</button>
             </div>
         </div>
     );

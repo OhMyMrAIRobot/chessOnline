@@ -146,6 +146,10 @@ export const MessageHandler = (
             case 'rightCastle':
                 rightCastle(msg.color === 'white' ? Colors.WHITE : Colors.BLACK);
                 break;
+            case 'giveUp':
+                console.log(msg.color);
+                GameState.setWinner(msg.color === 'white' ? Colors.BLACK : Colors.WHITE);
+                break;
         }
     }
 }
