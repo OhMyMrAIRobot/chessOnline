@@ -1,33 +1,25 @@
-.endContainer {
+.drawContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    width: 300px;
+    width: 400px;
     padding: 0 20px 0 20px;
 }
 
-.endText {
+.drawContainer h3 {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
 }
 
-.win {
-    color: #0ba10b;
-}
-
-.lose {
-    color: darkred;
-}
-
-.endButtons {
+.drawButtons {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.endLeave {
+.drawButton {
     border-radius: 7px;
     cursor: pointer;
     height: 30px;
@@ -40,27 +32,26 @@
     transition: 0.3s linear;
 }
 
-.endLeave:hover {
-    background-color: black;
+.drawAgree {
     color: white;
-    transition: 0.3s linear;
+    background-color: #0ba10b;
+    border: 2px solid #0f7a0f;
 }
 
-.endClose {
-    border-radius: 7px;
-    cursor: pointer;
-    height: 30px;
-    font-size: 18px;
-    font-weight: bold;
+.drawAgree:hover {
+    color: #0ba10b;
+    transition: 0.3s;
+    background-color: white;
+}
+
+.drawReject {
     color: white;
-    padding: 2px 30px 2px 30px;
     background-color: #d30909;
     border: 2px solid #d30909;
-    transition: 0.3s linear;
 }
 
-.endClose:hover {
-    background-color: white;
+.drawReject:hover {
+    transition: 0.3s;
     color: #d30909;
-    transition: 0.3s linear;
+    background-color: white;
 }

@@ -9,7 +9,8 @@ class GameState {
     _socket: any;
     _session: string = "";
     _winner: Colors | null = null;
-    _msgArray: Array<any> = [];
+    _isTimerStopped: boolean = false;
+    _isDraw: boolean = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -35,8 +36,12 @@ class GameState {
         this._session = id;
     }
 
-    pushMessage(data: any) {
-        this._msgArray.push(data);
+    setTimerActive(state: boolean) {
+        this._isTimerStopped = state;
+    }
+
+    setDraw() {
+        this._isDraw = true;
     }
 
 }

@@ -69,6 +69,15 @@ wss.on('connection', (ws: WebSocketWithId) => {
             case 'giveUp':
                 broadcast(ws, msg);
                 break;
+            case 'offerDraw':
+                broadcast(ws,msg);
+                break;
+            case 'agreeDraw':
+                broadcast(ws, msg);
+                break;
+            case 'rejectDraw':
+                broadcast(ws, msg);
+                break;
         }
     });
 });

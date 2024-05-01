@@ -14,12 +14,14 @@ import EndGameModal from "../Components/Modals/EndGameModal";
 import Chat from "../Components/ChatComponent";
 import SideBar from "../Components/SideBar";
 import {autorun} from "mobx";
+import OfferDrawModal from "../Components/Modals/OfferDrawModal";
 
 const GamePage = () => {
     // Modals
-    const [usernameModalActive, setUsernameModalActive] = useState<boolean>(true)
-    const [figureModalActive, setFigureModalActive] = useState<boolean>(false)
-    const [endModalActive, setEndModalActive] = useState<boolean>(false)
+    const [usernameModalActive, setUsernameModalActive] = useState<boolean>(true);
+    const [figureModalActive, setFigureModalActive] = useState<boolean>(false);
+    const [endModalActive, setEndModalActive] = useState<boolean>(false);
+    const [drawModalActive, setDrawModalActive] = useState<boolean>(false);
 
     const [board, setBoard] = useState(new Board());
     const [socket, setSocket] = useState(new WebSocket(`ws://localhost:8080`));
@@ -29,15 +31,16 @@ const GamePage = () => {
     const [msgArray, setMsgArray] = useState<any[]>([])
 
     useEffect(() => {
-        MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray);
-        if (curMove && board.checkMate(curMove))
-            GameState.setWinner(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE)
-
+        MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray, setDrawModalActive);
+        if (curMove && board.checkMate(curMove)){
+            GameState.setWinner(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+            setMsgArray(prev => [...prev, {type: 'win', color: GameState._color}])
+        }
     }, [curMove]);
 
     useEffect(() => {
         autorun(() => {
-            if (GameState._winner) {
+            if (GameState._winner || GameState._isDraw) {
                 setEndModalActive(true);
                 setCurMove(null);
             }
@@ -64,7 +67,6 @@ const GamePage = () => {
         socket.onopen = () => {
             board.initCells();
             board.addFigures();
-        //    setCurMove(Colors.BLACK);
         };
     }, [])
 
@@ -76,13 +78,21 @@ const GamePage = () => {
     return (
         <div className="app">
             <UsernameModal modalActive={usernameModalActive} setModalActive={setUsernameModalActive}/>
+
             <ChooseFigureModal
                 modalActive={figureModalActive}
                 setModalActive={setFigureModalActive}
                 selectedCell={selectedCell}
                 cell={cell}
             />
-            <EndGameModal modalActive={endModalActive} setModalActive={setEndModalActive} isWin={GameState._winner === GameState._color}/>
+
+            <EndGameModal
+                modalActive={endModalActive}
+                setModalActive={setEndModalActive}
+            />
+
+            <OfferDrawModal modalActive={drawModalActive} setModalActive={setDrawModalActive} />
+
             <SideBar curMove={curMove}/>
 
             <div style={{display:'flex', flexDirection:'column', gap:'10px'}}>

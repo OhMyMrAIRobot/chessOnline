@@ -19,14 +19,24 @@ const SideBar: FC<SideBarProps> = ({curMove}) => {
         })
     }
 
+    const offerDrawHandler = () => {
+        SendMessage(GameState._socket, {
+            method: 'offerDraw',
+            id: GameState._session,
+            color: GameState._color,
+        })
+    }
+
     const title = () => {
         if (GameState._winner) {
             return <h3 className={GameState._winner === GameState._color ? 'green' : 'red'}>
-                {GameState._winner && GameState._winner === GameState._color ? 'You win' : 'You lose'}</h3>
+                {GameState._winner && GameState._winner === GameState._color ? 'You won' : 'You lose'}</h3>
         } else if (curMove) {
             return <h3 className={GameState._color === curMove ? 'green' : 'red'}>
                 {GameState._color === curMove ? 'Your move' : 'Opponent move'}</h3>
-        } else
+        } else if (GameState._isDraw)
+            return <h3 className="green">Draw!</h3>
+        else
             return <h3 className="red">Waiting for opponent</h3>
     }
 
@@ -37,7 +47,10 @@ const SideBar: FC<SideBarProps> = ({curMove}) => {
             <Timer curMove={curMove}/>
 
             <div className="sidebarButtons">
-                <button className="sidebarButton draw">Offer a draw</button>
+                <button
+                    className="sidebarButton draw"
+                    onClick={() => offerDrawHandler()}
+                >Offer a draw</button>
 
                 <button
                     className="sidebarButton giveUp"

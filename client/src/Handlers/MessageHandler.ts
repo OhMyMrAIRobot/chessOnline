@@ -25,6 +25,7 @@ export const MessageHandler = (
     setCurMove: (color: Colors | null) => void,
     updateBoard: () => void,
     setMsgArray: (update: (prevMsgArray: any[]) => any[]) => void,
+    setDrawModalActive: (active: boolean) => void
     ) => {
 
     socket.onmessage = (event: MessageEvent) => {
@@ -70,6 +71,24 @@ export const MessageHandler = (
                 break;
             case 'giveUp':
                 GameState.setWinner(msg.color === 'white' ? Colors.BLACK : Colors.WHITE);
+                setMsgArray(prev => [...prev, {type: 'giveUp', color: msg.color}])
+                break;
+            case 'offerDraw':
+                setMsgArray(prev => [...prev, {type: 'offerDraw', color: msg.color}])
+                GameState.setTimerActive(true);
+                if (msg.color !== GameState._color)
+                    setDrawModalActive(true);
+                break;
+            case 'agreeDraw':
+                setMsgArray(prev => [...prev, {type: 'agreeDraw', color: msg.color}])
+                GameState.setDraw();
+                setCurMove(null);
+                break;
+            case 'rejectDraw':
+                //todo: fix timer
+                setMsgArray(prev => [...prev, {type: 'rejectDraw', color: msg.color}])
+                GameState.setTimerActive(true);
+                setCurMove(curMove);
                 break;
         }
     }

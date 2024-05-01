@@ -38,18 +38,34 @@ const CreateMessage = (message: any, chatContainer: HTMLElement) => {
 }
 
 // Системное сообщение
-const ConnectionMessage = (message: any, chatContainer: HTMLElement) => {
+const CreateSystemMessage = (message: any, chatContainer: HTMLElement) => {
     let messageElement = document.createElement('div');
     messageElement.className = "msgConnectContainer";
     chatContainer.appendChild(messageElement);
 
     let nameSpan = document.createElement('span');
     nameSpan.className = "msgConnect";
-    message.type === 'connect' ?
-        nameSpan.textContent = `User ${message.user} has connected!`
-        :
-        nameSpan.textContent = `User ${message.user} disconnected!`
-    ;
+    switch (message.type) {
+        case 'connect' :
+            nameSpan.textContent = `User ${message.user} has connected!`;
+            break;
+        case 'offerDraw':
+            nameSpan.textContent = `${message.color === GameState._color ? "You offered a draw!" : "The opponent offered a draw!"}`;
+            break;
+        case 'agreeDraw':
+            nameSpan.textContent = `The game ended in a draw!`;
+            break
+        case 'rejectDraw':
+            nameSpan.textContent = `${message.color === GameState._color ? "You rejected a draw!" : "The opponent rejected a draw!"}`;
+            break;
+        case 'win':
+            nameSpan.textContent = `${message.color === GameState._winner ? "You won!" : "You lose!"}`;
+            break
+        case 'giveUp':
+            nameSpan.textContent = `${message.color === GameState._color ? "You gave up!" : "The opponent gave up!"}`;
+            break;
+
+    }
     messageElement.appendChild(nameSpan);
 }
 
@@ -71,7 +87,7 @@ const Chat:FC<ChatProps> = ({msgArray}) => {
                 if (message.type === 'message')
                     CreateMessage(message, chatContainer);
                 else
-                    ConnectionMessage(message, chatContainer);
+                    CreateSystemMessage(message, chatContainer);
             });
 
             chatContainer.scrollTop = chatContainer.scrollHeight;
