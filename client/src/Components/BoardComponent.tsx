@@ -70,14 +70,16 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
 
     return (
         <div className="board">
-            {board._cells.map((row, index) =>
-                <React.Fragment key={index}>
-                    {row.map(cell =>
+            {board._cells.map((row, rowIndex) =>
+                <React.Fragment key={rowIndex}>
+                    {row.map((cell, colIndex) =>
                         <CellComponent
                             cell={cell}
                             key={cell._id}
                             selected={cell._x === selectedCell?._x && cell._y === selectedCell?._y}
                             click={click}
+                            digit={colIndex === 0 ? GameState._color === Colors.WHITE ? rowIndex : 7 - rowIndex : null}
+                            letter={rowIndex === 7 ? GameState._color === Colors.WHITE ? String.fromCharCode(colIndex + 65) : String.fromCharCode(65 + 7 - colIndex) : null}
                         />
                     )}
                 </React.Fragment>

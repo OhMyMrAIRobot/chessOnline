@@ -27,6 +27,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+.cellDigit {
+    position: absolute;
+    top: 0;
+    left: var(--lettersOffset);
+    font-weight: bold;
+}
+
+.cellLetter {
+    position: absolute;
+    bottom: 0;
+    right: var(--lettersOffset);
+    font-weight: bold;
 }
 
 .figure {
