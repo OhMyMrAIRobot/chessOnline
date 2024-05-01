@@ -3,13 +3,13 @@ import Modal from "./Modal";
 import "../../Resources/Styles/EndGameModal.css"
 import {useNavigate} from "react-router-dom";
 
-interface EndGameModal {
+interface EndGameModalProps {
     modalActive: boolean;
     setModalActive: (bool: boolean) => void;
     isWin: boolean;
 }
 
-const EndGameModal: FC<EndGameModal> = ({modalActive, setModalActive, isWin}) => {
+const EndGameModal: FC<EndGameModalProps> = ({modalActive, setModalActive, isWin}) => {
 
     const navigate = useNavigate();
 

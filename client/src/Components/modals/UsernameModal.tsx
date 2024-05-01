@@ -5,12 +5,12 @@ import "../../Resources/Styles/UsernameModal.css"
 import {SendMessage} from "../../Handlers/SendMessage";
 import {useParams} from "react-router-dom";
 
-interface UsernameModal {
+interface UsernameModalProps {
     modalActive: boolean;
     setModalActive: (bool: boolean) => void;
 }
 
-const UsernameModal: FC<UsernameModal> = ({modalActive, setModalActive}) => {
+const UsernameModal: FC<UsernameModalProps> = ({modalActive, setModalActive}) => {
 
     const inputRef = useRef<HTMLInputElement>(null);
     const params = useParams()
