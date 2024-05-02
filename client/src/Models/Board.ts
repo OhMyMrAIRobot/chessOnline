@@ -56,6 +56,23 @@ export class Board {
         return true;
     }
 
+    checkStalemate() {
+        if (this.checkKings())
+            return true;
+
+    }
+
+    checkKings() {
+        for (const row of this._cells) {
+            for (const cell of row) {
+                if (cell._figure && cell._figure?._name !== FigureNames.KING)
+                    return false
+            }
+        }
+
+        return true
+    }
+
     getKing(color: Colors): Cell {
         let result: Cell = new Cell(this, 0, 0, Colors.WHITE, null);
         for (let i = 0; i < this._cells.length; i++){
@@ -136,7 +153,7 @@ export class Board {
         //this.addQueens();
         //this.addRooks();
         //this.addKnights();
-        this.addPawns();
+       // this.addPawns();
         // this.addBishops();
 
         // for mate with only pawns & kings

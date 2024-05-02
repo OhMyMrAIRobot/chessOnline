@@ -32,6 +32,11 @@ const GamePage = () => {
 
     useEffect(() => {
         MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray, setDrawModalActive);
+        console.log(board.checkStalemate())
+        if (curMove && board.checkStalemate()) {
+            GameState.setDraw();
+            setMsgArray(prev => [...prev, {type: 'agreeDraw'}])
+        }
         if (curMove && board.checkMate(curMove)){
             GameState.setWinner(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
             setMsgArray(prev => [...prev, {type: 'win', color: GameState._color}])
