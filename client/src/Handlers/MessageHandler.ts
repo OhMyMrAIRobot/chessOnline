@@ -75,7 +75,9 @@ export const MessageHandler = (
                 break;
             case 'offerDraw':
                 setMsgArray(prev => [...prev, {type: 'offerDraw', color: msg.color}])
-                GameState.setTimerActive(true);
+                GameState.setTimerActive(false);
+                GameState.setTmpMove(curMove);
+                setCurMove(null);
                 if (msg.color !== GameState._color)
                     setDrawModalActive(true);
                 break;
@@ -85,10 +87,9 @@ export const MessageHandler = (
                 setCurMove(null);
                 break;
             case 'rejectDraw':
-                //todo: fix timer
                 setMsgArray(prev => [...prev, {type: 'rejectDraw', color: msg.color}])
                 GameState.setTimerActive(true);
-                setCurMove(curMove);
+                setCurMove(GameState._tmpMove);
                 break;
         }
     }

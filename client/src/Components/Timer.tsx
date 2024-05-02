@@ -16,7 +16,8 @@ const Timer: FC<TimerProps> = ({curMove}) => {
     useEffect(() => {
         if (curMove)
             startTimer()
-    }, [curMove]);
+        console.log('timer')
+    }, [curMove, GameState._isTimerActive]);
 
     function startTimer() {
         if (timer.current) {
@@ -29,7 +30,7 @@ const Timer: FC<TimerProps> = ({curMove}) => {
     function decrementBlackTimer() {
         setBlackTime(prevState => {
             const newTime = prevState - 1;
-            if (newTime <= 0 || GameState._winner || GameState._isTimerStopped) {
+            if (newTime <= 0 || GameState._winner || !GameState._isTimerActive) {
                 if (timer.current)
                     clearInterval(timer.current);
                 return newTime;
@@ -41,7 +42,7 @@ const Timer: FC<TimerProps> = ({curMove}) => {
     function decrementWhiteTimer() {
         setWhiteTime(prevState => {
             const newTime = prevState - 1;
-            if (newTime <= 0 || GameState._winner || GameState._isTimerStopped) {
+            if (newTime <= 0 || GameState._winner || !GameState._isTimerActive) {
                 if (timer.current)
                     clearInterval(timer.current);
                 return newTime;

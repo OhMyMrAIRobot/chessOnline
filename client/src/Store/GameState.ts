@@ -9,8 +9,9 @@ class GameState {
     _socket: any;
     _session: string = "";
     _winner: Colors | null = null;
-    _isTimerStopped: boolean = false;
+    _isTimerActive: boolean = true;
     _isDraw: boolean = false;
+    _tmpMove: Colors | null = null;
 
     constructor() {
         makeAutoObservable(this)
@@ -37,11 +38,15 @@ class GameState {
     }
 
     setTimerActive(state: boolean) {
-        this._isTimerStopped = state;
+        this._isTimerActive = state;
     }
 
     setDraw() {
         this._isDraw = true;
+    }
+
+    setTmpMove(color: Colors | null) {
+        this._tmpMove = color;
     }
 
 }
