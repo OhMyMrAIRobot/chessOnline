@@ -39,7 +39,6 @@ export class Figure{
         if (target._figure?._color === this._color) // same color
             return false;
 
-        // check
         const king = target._board.getKing(this._color);
         const tmpFigure = target._figure;
         target._figure = this;

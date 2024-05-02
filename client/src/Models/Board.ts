@@ -28,6 +28,27 @@ export class Board {
         }
     }
 
+    public addFigures() {
+
+        // default game
+        // this.addKings();
+        //this.addQueens();
+        //this.addRooks();
+        //this.addKnights();
+        //this.addPawns();
+        // this.addBishops();
+
+        // for mate with only pawns & kings
+        // this.addPawns();
+        // new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6))
+        // new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 6 : 1))
+
+        // for stalemate
+        new King(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 0 : 7));
+        new King(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0,GameState._color === Colors.WHITE ? 7 : 0));
+        new Queen(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 2 : 5, GameState._color === Colors.WHITE ? 2 : 5));
+    }
+
     public getCell(x: number, y: number){
         return this._cells[y][x];
     }
@@ -37,6 +58,11 @@ export class Board {
         if (!king.isCellUnderAttack(king, color)) {
             return false;
         }
+
+        return !this.checkMoves(color);
+    }
+
+    checkMoves(color: Colors): boolean {
         for (const row of this._cells) {
             for (const cell of row) {
                 const figure = cell._figure;
@@ -45,21 +71,24 @@ export class Board {
                         for (let j = 0; j < 8; j++) {
                             const targetCell = this.getCell(i, j);
                             if (figure.canMove(targetCell)) {
-                                console.log(figure)
-                                return false;
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
-        return true;
+        return false
     }
 
-    checkStalemate() {
+    checkStalemate():boolean {
         if (this.checkKings())
             return true;
+        const whiteKing = this.getKing(Colors.WHITE);
+        const blackKing = this.getKing(Colors.BLACK);
 
+        return (!this.checkMoves(Colors.WHITE) && !whiteKing.isCellUnderAttack(whiteKing, Colors.BLACK))
+            || (!this.checkMoves(Colors.BLACK) && !blackKing.isCellUnderAttack(blackKing, Colors.WHITE));
     }
 
     checkKings() {
@@ -147,19 +176,6 @@ export class Board {
         }
     }
 
-    public addFigures() {
-        this.addKings();
-      //  this.getCell(5,1)._figure = new Queen(Colors.WHITE, this.getCell(5,1))
-        //this.addQueens();
-        //this.addRooks();
-        //this.addKnights();
-       // this.addPawns();
-        // this.addBishops();
-
-        // for mate with only pawns & kings
-        new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6))
-     //   new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 6 : 1))
-    }
 
     public highlightCells(selectedCell: Cell | null)  {
         for (let i = 0; i < this._cells.length; i++){
@@ -188,7 +204,6 @@ export class Board {
 
     public leftCastle = (color: Colors) => {
         const rookColor = color === Colors.WHITE ? Colors.WHITE : Colors.BLACK;
-
         if (GameState._color === Colors.WHITE) {
             if (color === Colors.WHITE) {
                 this.moveRookAndKing(this.getCell(0, 7), this.getCell(4, 7), this.getCell(3, 7), this.getCell(2, 7), rookColor);
@@ -224,29 +239,29 @@ export class Board {
     public moveAndChange = (curMove: Colors, x0: number, y0: number, x1:number, y1:number, change: boolean, figure?: string) => {
         let selectedCell: Cell;
         let cell: Cell;
-            if (curMove === GameState._color){
-                selectedCell = this.getCell(x0, y0);
-                cell = this.getCell(x1, y1);
-            } else {
-                selectedCell = this.getCell(7 - x0, 7 - y0);
-                cell = this.getCell(7 - x1, 7 - y1);
+        if (curMove === GameState._color){
+            selectedCell = this.getCell(x0, y0);
+            cell = this.getCell(x1, y1);
+        } else {
+            selectedCell = this.getCell(7 - x0, 7 - y0);
+            cell = this.getCell(7 - x1, 7 - y1);
+        }
+        selectedCell.moveFigure(cell);
+        if (change && cell._figure) {
+            switch (figure){
+                case 'Bishop':
+                    cell._figure = new Bishop(cell._figure._color, cell);
+                    break;
+                case 'Knight':
+                    cell._figure = new Knight(cell._figure._color, cell);
+                    break;
+                case 'Queen':
+                    cell._figure = new Queen(cell._figure._color, cell);
+                    break;
+                case 'Rook':
+                    cell._figure = new Rook(cell._figure._color, cell);
+                    break;
             }
-            selectedCell.moveFigure(cell);
-            if (change && cell._figure) {
-                switch (figure){
-                    case 'Bishop':
-                        cell._figure = new Bishop(cell._figure._color, cell);
-                        break;
-                    case 'Knight':
-                        cell._figure = new Knight(cell._figure._color, cell);
-                        break;
-                    case 'Queen':
-                        cell._figure = new Queen(cell._figure._color, cell);
-                        break;
-                    case 'Rook':
-                        cell._figure = new Rook(cell._figure._color, cell);
-                        break;
-                }
-            }
+        }
     }
 }
