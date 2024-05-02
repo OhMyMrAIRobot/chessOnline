@@ -1,6 +1,7 @@
 import {Colors} from "./Colors";
 import {Figure, FigureNames} from "./figures/Figure";
 import {Board} from "./Board";
+import GameState from "../Store/GameState";
 
 export class Cell{
     readonly _x: number;
@@ -89,7 +90,7 @@ export class Cell{
 
                     const tmp = target._figure;
                     target._figure = null;
-                    if (figure.canAttack(target)  && figure !== tmp && figure._name !== FigureNames.PAWN) {
+                    if (figure.canAttack(target) && figure !== tmp && figure._name !== FigureNames.PAWN) {
                         target._figure = tmp;
                         return true;
                     }
@@ -114,13 +115,33 @@ export class Cell{
     }
 
     public moveFigure(targetCell: Cell) {
+
+        const getCoord = (x1: number, y1:number) => {
+            const char = GameState._color === Colors.WHITE ? String.fromCharCode(x1 + 97) : String.fromCharCode(7 - x1 + 97);
+            const digit = GameState._color === Colors.WHITE ? 7 - y1 + 1 : y1 + 1;
+            return `${char}${digit}`
+        }
+
+        const makeNotation = (figure: string, x: number, y:number, x1:number, y1:number, isTake: boolean): string => {
+            return `${figure}${getCoord(x, y)}${isTake ? ' : ' : ' - '}${getCoord(x1, y1)}`;
+        }
+
         if (this._figure){
+            const color = this._figure._color;
+            let move = makeNotation(this._figure._name.slice(0,1), this._figure._cell._x, this._figure._cell._y, targetCell._x, targetCell._y, false)
+
             this._figure.moveFigure(targetCell);
             if (targetCell._figure){
                 this.addLostFigure(targetCell._figure);
+                move = makeNotation(this._figure._name.slice(0,1), this._figure._cell._x, this._figure._cell._y, targetCell._x, targetCell._y, true)
             }
             targetCell.setFigure(this._figure)
             this._figure = null;
+
+            const king = targetCell._board.getKing(color === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+            if (king.isCellUnderAttack(king, color === Colors.WHITE ? Colors.BLACK : Colors.WHITE))
+                move += '+'
+            GameState.addMove(move);
         }
     }
 }

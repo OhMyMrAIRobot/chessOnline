@@ -11,11 +11,6 @@ const ChangeFormat =(min: number):string => {
         return min.toString()
 }
 
-//    const logMove = (x1: number, y1: number) => {
-//         const char = curMove === Colors.WHITE ? String.fromCharCode(x1 + 65) : String.fromCharCode(7 - x1 + 65);
-//         const digit = curMove === Colors.WHITE ? 7 - y1 + 1 : y1 + 1;
-//         setMovesArray(prev => [...prev, `${char}${digit}`]);
-//     }
 
 // Сообщение от пользователя
 const CreateMessage = (message: any, chatContainer: HTMLElement) => {
@@ -88,7 +83,7 @@ const Chat:FC<ChatProps> = ({msgArray}) => {
     // обновление сообщений
     useEffect(() => {
         if (chatContainer) {
-            if (chatContainer) chatContainer.innerHTML = '';
+           chatContainer.innerHTML = '';
             msgArray.forEach((message) => {
                 if (message.type === 'message')
                     CreateMessage(message, chatContainer);

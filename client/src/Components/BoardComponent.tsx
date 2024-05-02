@@ -78,7 +78,7 @@ const BoardComponent: FC<BoardProps> = ({board, updateBoard, curMove, setFigureM
                             key={cell._id}
                             selected={cell._x === selectedCell?._x && cell._y === selectedCell?._y}
                             click={click}
-                            digit={colIndex === 0 ? GameState._color === Colors.WHITE ? rowIndex : 7 - rowIndex : null}
+                            digit={colIndex === 0 ? GameState._color === Colors.BLACK ? rowIndex + 1 : 7 - rowIndex + 1 : null}
                             letter={rowIndex === 7 ? GameState._color === Colors.WHITE ? String.fromCharCode(colIndex + 65) : String.fromCharCode(65 + 7 - colIndex) : null}
                         />
                     )}

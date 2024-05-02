@@ -35,17 +35,19 @@ const GamePage = () => {
 
     useEffect(() => {
         MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray, setDrawModalActive);
-        if (curMove && board.checkStalemate()) {
-            GameState.setDraw();
-            GameState.setTimerActive(false);
-            setMsgArray(prev => [...prev, {type: 'agreeDraw'}])
-        }
         if (curMove && board.checkMate(curMove)){
             GameState.setWinner(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
             setMsgArray(prev => [...prev, {type: 'win', color: GameState._color}])
         }
-        if (curMove)
+        else if (curMove && board.checkStalemate()) {
+            GameState.setDraw();
+            GameState.setTimerActive(false);
+            setMsgArray(prev => [...prev, {type: 'agreeDraw'}])
+        }
+        if (curMove){
             play()
+        }
+
     }, [curMove]);
 
     useEffect(() => {

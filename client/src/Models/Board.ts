@@ -39,16 +39,17 @@ export class Board {
         // this.addBishops();
 
         // for mate with only pawns & kings
-        // this.addPawns();
-        // new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6))
-        // new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 6 : 1))
+        this.addKings();
+        this.addPawns();
+        new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6))
+        new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 6 : 1))
 
         // for stalemate
-        new King(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 0 : 7));
-        new King(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0,GameState._color === Colors.WHITE ? 7 : 0));
-        new Queen(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 2 : 5, GameState._color === Colors.WHITE ? 2 : 5));
-        new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 0 : 7));
-        new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6));
+        // new King(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 0 : 7));
+        // new King(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0,GameState._color === Colors.WHITE ? 7 : 0));
+        // new Queen(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 2 : 5, GameState._color === Colors.WHITE ? 2 : 5));
+        // new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 0 : 7));
+        // new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6));
     }
 
     public getCell(x: number, y: number){
@@ -264,6 +265,10 @@ export class Board {
                     cell._figure = new Rook(cell._figure._color, cell);
                     break;
             }
+            GameState._movesNotation[GameState._movesNotation.length - 1] += `${figure?.slice(0,1)}`;
+            const king = this.getKing(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+            if (king.isCellUnderAttack(king, curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE))
+                GameState._movesNotation[GameState._movesNotation.length - 1] += '+';
         }
     }
 }

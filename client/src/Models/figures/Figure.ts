@@ -4,13 +4,13 @@ import img from "../../Resources/Images/black-knight.png"
 import GameState from "../../Store/GameState";
 
 export enum FigureNames{
-    FIGURE = "Фигура",
-    KING = "Король",
-    QUEEN= "Ферзь",
-    KNIGHT = "Конь",
-    PAWN = "Пешка",
-    ROOK = "Ладья",
-    BISHOP = "Слон",
+    FIGURE = "Figure",
+    KING = "King",
+    QUEEN= "Queen",
+    KNIGHT = "Knight",
+    PAWN = "Pawn",
+    ROOK = "Rook",
+    BISHOP = "Bishop",
 }
 
 export class Figure{

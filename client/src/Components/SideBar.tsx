@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import "../Resources/Styles/SideBar.css"
 import GameState from "../Store/GameState";
 import {Colors} from "../Models/Colors";
@@ -40,11 +40,26 @@ const SideBar: FC<SideBarProps> = ({curMove}) => {
             return <h3 className="red">Waiting for opponent</h3>
     }
 
+    const notationContainer: HTMLElement | null = document.getElementById('movesNotation');
+
+    useEffect(() => {
+        if (notationContainer) {
+            notationContainer.innerHTML = '';
+            GameState._movesNotation.forEach((move) => {
+                let messageElement = document.createElement('p');
+                messageElement.textContent = move
+                notationContainer.appendChild(messageElement);
+            })
+        }
+    }, [curMove]);
+
     return (
         <div className="sidebar">
             {title()}
 
             <Timer curMove={curMove}/>
+
+            <div className={"movesNotation"} id={"movesNotation"}></div>
 
             <div className="sidebarButtons">
                 <button

@@ -91,3 +91,9 @@
     width: 20px;
     height: 20px;
 }
+
+.movesNotation {
+    width: 100%;
+    height: 100px;
+    background-color: #0ba10b;
+}

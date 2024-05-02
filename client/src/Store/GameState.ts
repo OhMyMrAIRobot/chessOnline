@@ -12,6 +12,7 @@ class GameState {
     _isTimerActive: boolean = true;
     _isDraw: boolean = false;
     _tmpMove: Colors | null = null;
+    _movesNotation: string[] = [];
 
     constructor() {
         makeAutoObservable(this)
@@ -47,6 +48,10 @@ class GameState {
 
     setTmpMove(color: Colors | null) {
         this._tmpMove = color;
+    }
+
+    addMove(move:string) {
+        this._movesNotation.push(move)
     }
 
 }
