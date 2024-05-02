@@ -15,6 +15,8 @@ import Chat from "../Components/ChatComponent";
 import SideBar from "../Components/SideBar";
 import {autorun} from "mobx";
 import OfferDrawModal from "../Components/Modals/OfferDrawModal";
+import useSound from "use-sound";
+import moveSound from "../Resources/Sounds/Move.wav";
 
 const GamePage = () => {
     // Modals
@@ -29,6 +31,7 @@ const GamePage = () => {
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
     const [cell, setCell] = useState<Cell | null>(null);
     const [msgArray, setMsgArray] = useState<any[]>([])
+    const [play] = useSound(moveSound);
 
     useEffect(() => {
         MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray, setDrawModalActive);
@@ -41,6 +44,8 @@ const GamePage = () => {
             GameState.setWinner(curMove === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
             setMsgArray(prev => [...prev, {type: 'win', color: GameState._color}])
         }
+        if (curMove)
+            play()
     }, [curMove]);
 
     useEffect(() => {
