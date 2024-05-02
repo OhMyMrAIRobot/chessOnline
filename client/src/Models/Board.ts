@@ -47,6 +47,8 @@ export class Board {
         new King(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 0 : 7));
         new King(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0,GameState._color === Colors.WHITE ? 7 : 0));
         new Queen(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 2 : 5, GameState._color === Colors.WHITE ? 2 : 5));
+        new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 0 : 7));
+        new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6));
     }
 
     public getCell(x: number, y: number){

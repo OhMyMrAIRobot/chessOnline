@@ -32,9 +32,9 @@ const GamePage = () => {
 
     useEffect(() => {
         MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray, setDrawModalActive);
-        console.log(board.checkStalemate())
         if (curMove && board.checkStalemate()) {
             GameState.setDraw();
+            GameState.setTimerActive(false);
             setMsgArray(prev => [...prev, {type: 'agreeDraw'}])
         }
         if (curMove && board.checkMate(curMove)){

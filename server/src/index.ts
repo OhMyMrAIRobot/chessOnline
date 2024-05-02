@@ -25,7 +25,7 @@ app.post('/createGame', (req, res) => {
     try {
         const id: string = req.body.id;
         Games.push(id);
-        return res.status(200).json({message: "Game created"})
+        return res.status(200).json({id: id})
     } catch (e) {
         return res.status(500).json({message: e})
     }

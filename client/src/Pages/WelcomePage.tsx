@@ -14,14 +14,13 @@ const WelcomePage = () => {
         navigate(`/${color}/${id}`);
     }
 
-    const createGame = async () => {
-        CreateGameHandler()
-            .then((id) => {
-                jumpToGame('White', id);
-            })
+    const createGame = () => {
+        CreateGameHandler().then((res) => {
+            jumpToGame('White', res.data.id)
+        })
             .catch((e) => {
                 console.log(e);
-            });
+            })
     }
 
     return (

@@ -16,7 +16,6 @@ const Timer: FC<TimerProps> = ({curMove}) => {
     useEffect(() => {
         if (curMove)
             startTimer()
-        console.log('timer')
     }, [curMove, GameState._isTimerActive]);
 
     function startTimer() {
