@@ -11,11 +11,10 @@ import GameState from "../Store/GameState";
 import gameState from "../Store/GameState";
 
 export class Board {
-    _cells: Cell[][] = [];
-    _lostWhiteFigures: Figure[] = [];
-    _lostBlackFigures: Figure[] = [];
+    public _cells: Cell[][] = [];
+    public _lostWhiteFigures: Figure[] = [];
+    public _lostBlackFigures: Figure[] = [];
 
-    // Fill board
     public initCells() {
         for (let i = 0; i < 8; i++) {
             const row: Cell[] = [];
@@ -32,11 +31,11 @@ export class Board {
 
         // default game
         this.addKings();
-        //this.addQueens();
+        this.addQueens();
         this.addRooks();
-        //this.addKnights();
-        //this.addPawns();
-        //this.addBishops();
+        this.addKnights();
+        this.addPawns();
+        this.addBishops();
 
         // for mate with only pawns & kings
         // this.addKings();
@@ -56,7 +55,7 @@ export class Board {
         return this._cells[y][x];
     }
 
-    checkMate(color: Colors): boolean {
+    public checkMate(color: Colors): boolean {
         const king = this.getKing(color);
         if (!king.isCellUnderAttack(king, color)) {
             return false;
@@ -65,7 +64,7 @@ export class Board {
         return !this.checkMoves(color);
     }
 
-    checkMoves(color: Colors): boolean {
+    private checkMoves(color: Colors): boolean {
         for (const row of this._cells) {
             for (const cell of row) {
                 const figure = cell._figure;
@@ -84,7 +83,7 @@ export class Board {
         return false
     }
 
-    checkStalemate():boolean {
+    public checkStalemate():boolean {
         if (this.checkKings())
             return true;
         const whiteKing = this.getKing(Colors.WHITE);
@@ -94,7 +93,7 @@ export class Board {
             || (!this.checkMoves(Colors.BLACK) && !blackKing.isCellUnderAttack(blackKing, Colors.WHITE));
     }
 
-    checkKings() {
+    private checkKings() {
         for (const row of this._cells) {
             for (const cell of row) {
                 if (cell._figure && cell._figure?._name !== FigureNames.KING)
@@ -105,7 +104,7 @@ export class Board {
         return true
     }
 
-    getKing(color: Colors): Cell {
+    public getKing(color: Colors): Cell {
         let result: Cell = new Cell(this, 0, 0, Colors.WHITE, null);
         for (let i = 0; i < this._cells.length; i++){
             const row = this._cells[i];

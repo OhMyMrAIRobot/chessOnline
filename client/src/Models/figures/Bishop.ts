@@ -12,7 +12,7 @@ export class Bishop extends Figure {
         this._name = FigureNames.BISHOP;
     }
 
-    canMove(target: Cell): boolean {
+    public canMove(target: Cell): boolean {
         if(!super.canMove(target))
             return false;
         if (this._cell.isEmptyDiagonal(target))
@@ -20,7 +20,7 @@ export class Bishop extends Figure {
         return false;
     }
 
-    canAttack(target: Cell): boolean {
+    public canAttack(target: Cell): boolean {
         return super.canAttack(target) && this._cell.isEmptyDiagonal(target);
     }
 }

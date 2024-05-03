@@ -5,7 +5,8 @@ import blackImg from "../../Resources/Images/kosal/black-rook.svg";
 import whiteImg from "../../Resources/Images/kosal/white-rook.svg";
 
 export class Rook extends Figure {
-    _isFirstMove: boolean = true;
+    public _isFirstMove: boolean = true;
+
     constructor(color: Colors, cell: Cell) {
         super(color, cell);
         this._img = color === Colors.BLACK ? blackImg : whiteImg;

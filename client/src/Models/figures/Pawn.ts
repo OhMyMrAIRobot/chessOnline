@@ -7,7 +7,7 @@ import GameState from "../../Store/GameState";
 
 export class Pawn extends Figure {
 
-    _isFirstStep: boolean = true;
+    private _isFirstStep: boolean = true;
 
     constructor(color: Colors, cell: Cell) {
         super(color, cell);
@@ -30,7 +30,7 @@ export class Pawn extends Figure {
         return false;
     }
 
-    canMove(target: Cell): boolean {
+    public canMove(target: Cell): boolean {
         if (!super.canMove(target))
             return false;
 
@@ -54,7 +54,7 @@ export class Pawn extends Figure {
         return false;
     }
 
-    moveFigure(target: Cell) {
+    public moveFigure(target: Cell) {
         super.moveFigure(target);
         this._isFirstStep = false;
     }

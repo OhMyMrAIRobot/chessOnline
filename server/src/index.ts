@@ -6,7 +6,6 @@ import cors from 'cors';
 
 dotenv.config();
 
-
 const app = express();
 app.use(cors())
 const server = http.createServer(app);
@@ -98,8 +97,9 @@ const connectionHandler = (ws: WebSocketWithId, msg: { id: number, data: any }) 
     broadcast(ws, msg);
 };
 
-const PORT = 8080;
-const HOST = 'localhost'
+const PORT: number = parseInt(process.env.PORT as string) || 3001;
+const HOST: string = process.env.HOST || '127.0.0.1';
+
 server.listen(PORT, HOST,  () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on server ${HOST}:${PORT}`);
 });

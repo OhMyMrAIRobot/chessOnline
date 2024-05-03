@@ -4,13 +4,13 @@ import {Board} from "./Board";
 import GameState from "../Store/GameState";
 
 export class Cell{
-    readonly _x: number;
-    readonly _y: number;
-    readonly _color: Colors;
-    _figure: Figure | null;
-    _board: Board;
-    _available: boolean;
-    _id: number;
+    public readonly _x: number;
+    public readonly _y: number;
+    public readonly _color: Colors;
+    public _figure: Figure | null;
+    public _board: Board;
+    public _available: boolean;
+    public _id: number;
 
     constructor(board: Board, x: number, y: number, color: Colors, figure: Figure | null) {
         this._board = board;
@@ -22,18 +22,18 @@ export class Cell{
         this._id = Math.random()
     }
 
-    isEmpty(): boolean {
+    public isEmpty(): boolean {
         return this._figure === null;
     }
 
-    isEnemy(target: Cell): boolean {
+    public isEnemy(target: Cell): boolean {
         if (target._figure){
             return this._figure?._color !== target._figure._color;
         }
         return false;
     }
 
-    isEmptyVertical(target: Cell): boolean {
+    public isEmptyVertical(target: Cell): boolean {
         if (this._x !== target._x)
             return false;
 
@@ -47,7 +47,7 @@ export class Cell{
         return true;
     }
 
-    isEmptyHorizontal(target: Cell): boolean {
+    public isEmptyHorizontal(target: Cell): boolean {
         if (this._y !== target._y)
             return false;
 
@@ -62,7 +62,7 @@ export class Cell{
         return true;
     }
 
-    isEmptyDiagonal(target: Cell): boolean {
+    public isEmptyDiagonal(target: Cell): boolean {
         const absX = Math.abs(this._x - target._x);
         const absY = Math.abs(this._y - target._y);
         if (absX !== absY)
@@ -102,12 +102,12 @@ export class Cell{
     }
 
 
-    setFigure(figure: Figure) {
+    private setFigure(figure: Figure) {
         this._figure = figure;
         this._figure._cell = this;
     }
 
-    addLostFigure(figure: Figure) {
+    public addLostFigure(figure: Figure) {
         figure._color === Colors.BLACK ?
             this._board._lostBlackFigures.push(figure)
             :

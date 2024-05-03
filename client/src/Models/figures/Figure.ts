@@ -29,13 +29,13 @@ export class Figure{
         this._id = Math.random();
     }
 
-    canAttack(target: Cell): boolean {
-        if (target._figure?._color === this._color) // same color
+    public canAttack(target: Cell): boolean {
+        if (target._figure?._color === this._color)
             return false;
         return true;
     }
 
-    canMove(target: Cell) : boolean {
+    public canMove(target: Cell) : boolean {
         if (target._figure?._color === this._color) // same color
             return false;
 
@@ -55,10 +55,10 @@ export class Figure{
         return false;
     }
 
-    canPawnAttack(target: Cell): boolean {
+    public canPawnAttack(target: Cell): boolean {
         const direction = GameState._color === this._color ? -1 : 0;
         return target._y === this._cell._y + direction && (target._x === this._cell._x + 1 || target._x === this._cell._x - 1);
     }
 
-    moveFigure(target: Cell){}
+    public moveFigure(target: Cell){}
 }
