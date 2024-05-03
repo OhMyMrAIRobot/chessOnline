@@ -17,6 +17,7 @@ import {autorun} from "mobx";
 import OfferDrawModal from "../Components/Modals/OfferDrawModal";
 import useSound from "use-sound";
 import moveSound from "../Resources/Sounds/Move.wav";
+import {SendMessage} from "../Handlers/SendMessage";
 
 const GamePage = () => {
     // Modals
@@ -32,6 +33,18 @@ const GamePage = () => {
     const [cell, setCell] = useState<Cell | null>(null);
     const [msgArray, setMsgArray] = useState<any[]>([])
     const [play] = useSound(moveSound);
+
+    window.onunload = () => {
+        if (GameState._username){
+            SendMessage(GameState._socket,{
+                method: 'disconnect', id:
+                GameState._session,
+                username: GameState._username,
+                color: GameState._color
+            })
+        }
+        GameState._socket.close();
+    }
 
     useEffect(() => {
         MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray, setDrawModalActive);

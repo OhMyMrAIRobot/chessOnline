@@ -91,6 +91,9 @@ export const MessageHandler = (
                 GameState.setTimerActive(true);
                 setCurMove(GameState._tmpMove);
                 break;
+            case 'disconnect':
+                setMsgArray(prev => [...prev, {type: 'disconnect', username: msg.username}])
+                GameState.setWinner(msg.color === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
         }
     }
 }

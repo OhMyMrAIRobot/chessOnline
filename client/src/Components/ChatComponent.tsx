@@ -50,6 +50,9 @@ const CreateSystemMessage = (message: any, chatContainer: HTMLElement) => {
         case 'connect' :
             nameSpan.textContent = `User ${message.user} has connected!`;
             break;
+        case 'disconnect':
+            nameSpan.textContent = `User ${message.username} disconnected!`;
+            break;
         case 'offerDraw':
             nameSpan.textContent = `${message.color === GameState._color ? "You offered a draw!" : "The opponent offered a draw!"}`;
             break;

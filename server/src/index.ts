@@ -78,6 +78,9 @@ wss.on('connection', (ws: WebSocketWithId) => {
             case 'rejectDraw':
                 broadcast(ws, msg);
                 break;
+            case 'disconnect':
+                broadcast(ws, msg);
+                break;
         }
     });
 });
