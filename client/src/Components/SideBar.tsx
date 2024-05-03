@@ -42,14 +42,30 @@ const SideBar: FC<SideBarProps> = ({curMove}) => {
 
     const notationContainer: HTMLElement | null = document.getElementById('movesNotation');
 
+    const addToNotation = (parent: HTMLElement, textContent: string) => {
+        let messageElement = document.createElement('div');
+        messageElement.className = "move"
+        messageElement.textContent = textContent;
+        parent.appendChild(messageElement);
+    }
+
     useEffect(() => {
         if (notationContainer) {
             notationContainer.innerHTML = '';
-            GameState._movesNotation.forEach((move) => {
-                let messageElement = document.createElement('p');
-                messageElement.textContent = move
-                notationContainer.appendChild(messageElement);
+            let counter = 1;
+
+            addToNotation(notationContainer, '#');
+            addToNotation(notationContainer, 'White');
+            addToNotation(notationContainer, 'Black');
+
+            GameState._movesNotation.forEach((move, index) => {
+                if (index % 2 === 0) {
+                    addToNotation(notationContainer, counter.toString());
+                    counter++
+                }
+                addToNotation(notationContainer, move);
             })
+            notationContainer.scrollTop = notationContainer.scrollHeight;
         }
     }, [curMove]);
 
@@ -58,6 +74,8 @@ const SideBar: FC<SideBarProps> = ({curMove}) => {
             {title()}
 
             <Timer curMove={curMove}/>
+
+            <h3 className={'green'}>Moves notation</h3>
 
             <div className={"movesNotation"} id={"movesNotation"}></div>
 

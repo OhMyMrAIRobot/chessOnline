@@ -9,8 +9,8 @@ interface TimerProps {
 }
 
 const Timer: FC<TimerProps> = ({curMove}) => {
-    const [blackTime, setBlackTime] = useState(300);
-    const [whiteTime, setWhiteTime] = useState(300);
+    const [blackTime, setBlackTime] = useState(3000);
+    const [whiteTime, setWhiteTime] = useState(3000);
     const timer = useRef<null | ReturnType<typeof setInterval>>(null);
 
     useEffect(() => {
