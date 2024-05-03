@@ -21,7 +21,11 @@ const UsernameModal: FC<UsernameModalProps> = ({modalActive, setModalActive}) =>
             if (username !== "" && params.id) {
                 GameState.setUsername(username);
                 setModalActive(false);
-                SendMessage(GameState._socket, {method: 'connection', id: GameState._session, username: username, color: GameState._color});
+                SendMessage(GameState._socket, {method: 'connection',
+                    id: GameState._session,
+                    username: username,
+                    color: GameState._color
+                });
             } else {
                 inputRef.current.style.borderColor = "red";
             }

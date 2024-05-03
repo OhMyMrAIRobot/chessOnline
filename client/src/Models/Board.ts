@@ -31,18 +31,18 @@ export class Board {
     public addFigures() {
 
         // default game
-        // this.addKings();
+        this.addKings();
         //this.addQueens();
-        //this.addRooks();
+        this.addRooks();
         //this.addKnights();
         //this.addPawns();
-        // this.addBishops();
+        //this.addBishops();
 
         // for mate with only pawns & kings
-        this.addKings();
-        this.addPawns();
-        new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6))
-        new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 6 : 1))
+        // this.addKings();
+        // this.addPawns();
+        // new Pawn(Colors.WHITE, this.getCell(GameState._color === Colors.WHITE ? 7 : 0, GameState._color === Colors.WHITE ? 1 : 6))
+        // new Pawn(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 6 : 1))
 
         // for stalemate
         // new King(Colors.BLACK, this.getCell(GameState._color === Colors.WHITE ? 0 : 7, GameState._color === Colors.WHITE ? 0 : 7));
@@ -220,6 +220,7 @@ export class Board {
                 this.moveRookAndKing(this.getCell(0, 7), this.getCell(3, 7), this.getCell(2, 7), this.getCell(1, 7), rookColor);
             }
         }
+        GameState.addMove(rookColor === Colors.WHITE ? '0—0—0' : '0-0')
     };
 
     public rightCastle = (color: Colors) => {
@@ -237,6 +238,7 @@ export class Board {
                 this.moveRookAndKing(this.getCell(7, 7), this.getCell(3, 7), this.getCell(4, 7), this.getCell(5, 7), rookColor);
             }
         }
+        GameState.addMove(rookColor === Colors.WHITE ? '0—0' : '0-0-0')
     }
 
     public moveAndChange = (curMove: Colors, x0: number, y0: number, x1:number, y1:number, change: boolean, figure?: string) => {
