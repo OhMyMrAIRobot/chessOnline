@@ -7,7 +7,7 @@ import {Rook} from "./Rook";
 import GameState from "../../Store/GameState";
 
 export class King extends Figure {
-    private _isFirstMove: boolean = true;
+    public _isFirstMove: boolean = true;
 
     constructor(color: Colors, cell: Cell) {
         super(color, cell);
@@ -57,6 +57,7 @@ export class King extends Figure {
     }
 
     public canLeftCastle(target: Cell): boolean {
+        console.log(this._isFirstMove)
         if (!this._isFirstMove)
             return false;
 

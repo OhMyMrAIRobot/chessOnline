@@ -31,11 +31,11 @@ export class Board {
 
         // default game
         this.addKings();
-        this.addQueens();
+        // this.addQueens();
         this.addRooks();
-        this.addKnights();
-        this.addPawns();
-        this.addBishops();
+        // this.addKnights();
+        // this.addPawns();
+        // this.addBishops();
 
         // for mate with only pawns & kings
         // this.addKings();
@@ -202,6 +202,8 @@ export class Board {
         oldKingCell._figure = null;
         newRookCell._figure = new Rook(rookColor, newRookCell);
         newKingCell._figure = new King(rookColor, newKingCell);
+        (newRookCell._figure as Rook)._isFirstMove = false;
+        (newKingCell._figure as King)._isFirstMove = false;
     };
 
     public leftCastle = (color: Colors) => {
