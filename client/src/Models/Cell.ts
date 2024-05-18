@@ -123,7 +123,7 @@ export class Cell{
         }
 
         const makeNotation = (figure: string, x: number, y:number, x1:number, y1:number, isTake: boolean): string => {
-            return `${figure}${getCoord(x, y)}${isTake ? ' : ' : ' - '}${getCoord(x1, y1)}`;
+            return `${figure}${getCoord(x, y)}${isTake ? ':' : '-'}${getCoord(x1, y1)}`;
         }
 
         if (this._figure){
@@ -138,7 +138,7 @@ export class Cell{
             targetCell.setFigure(this._figure)
             this._figure = null;
 
-            const king = targetCell._board.getKing(color === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
+            const king = this._board.getKing(color === Colors.WHITE ? Colors.BLACK : Colors.WHITE);
             if (king.isCellUnderAttack(king, color === Colors.WHITE ? Colors.BLACK : Colors.WHITE))
                 move += '+'
             GameState.addMove(move);

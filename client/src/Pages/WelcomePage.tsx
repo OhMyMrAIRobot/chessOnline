@@ -15,7 +15,8 @@ const WelcomePage = () => {
     }
 
     const createGame = () => {
-        CreateGameHandler().then((res) => {
+        CreateGameHandler()
+            .then((res) => {
             jumpToGame('White', res.data.id)
         })
             .catch((e) => {

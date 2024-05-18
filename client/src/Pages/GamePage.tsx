@@ -34,17 +34,17 @@ const GamePage = () => {
     const [msgArray, setMsgArray] = useState<any[]>([])
     const [play] = useSound(moveSound);
 
-    window.onunload = () => {
-        if (GameState._username){
-            SendMessage(GameState._socket,{
-                method: 'disconnect', id:
-                GameState._session,
-                username: GameState._username,
-                color: GameState._color
-            })
-        }
-        GameState._socket.close();
-    }
+    // window.onunload = () => {
+    //     if (GameState._username){
+    //         SendMessage(GameState._socket,{
+    //             method: 'disconnect', id:
+    //             GameState._session,
+    //             username: GameState._username,
+    //             color: GameState._color
+    //         })
+    //     }
+    //     GameState._socket.close();
+    // }
 
     useEffect(() => {
         MessageHandler(socket, board, curMove, setCurMove, updateBoard, setMsgArray, setDrawModalActive);

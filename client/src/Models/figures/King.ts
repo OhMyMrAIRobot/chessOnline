@@ -57,7 +57,6 @@ export class King extends Figure {
     }
 
     public canLeftCastle(target: Cell): boolean {
-        console.log(this._isFirstMove)
         if (!this._isFirstMove)
             return false;
 

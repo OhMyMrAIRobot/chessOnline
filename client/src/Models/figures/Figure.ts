@@ -56,7 +56,20 @@ export class Figure{
     }
 
     public canPawnAttack(target: Cell): boolean {
-        const direction = GameState._color === this._color ? -1 : 0;
+        let direction;
+        if (GameState._color === Colors.WHITE) {
+            if (this._color === Colors.WHITE) {
+                direction = -1;
+            } else {
+                direction = 1;
+            }
+        } else {
+            if (this._color === Colors.WHITE) {
+                direction = 1;
+            } else {
+                direction = -1;
+            }
+        }
         return target._y === this._cell._y + direction && (target._x === this._cell._x + 1 || target._x === this._cell._x - 1);
     }
 

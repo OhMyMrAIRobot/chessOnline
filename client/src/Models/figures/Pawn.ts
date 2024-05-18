@@ -16,12 +16,11 @@ export class Pawn extends Figure {
     }
 
     private isPathObstructed(target: Cell): boolean {
-        const direction = this._color === GameState._color ? -1 : 0;
+        const direction = this._color === GameState._color ? -1 : 1;
         const startY = this._cell._y + direction;
         const endY = target._y;
-        const step = direction;
 
-        for (let y = startY; y !== endY; y += step) {
+        for (let y = startY; y !== endY; y += direction) {
             if (!this._cell._board.getCell(target._x, y).isEmpty()) {
                 return true;
             }
@@ -34,8 +33,8 @@ export class Pawn extends Figure {
         if (!super.canMove(target))
             return false;
 
-        const direction = this._color === GameState._color ? -1 : 0;
-        const firstStepDirection = this._color === GameState._color ? -2 : 0;
+        const direction = this._color === GameState._color ? -1 : 1;
+        const firstStepDirection = this._color === GameState._color ? -2 : 2;
 
         if (target._x === this._cell._x) {
             if (target._y === this._cell._y + direction && this._cell._board.getCell(target._x, target._y).isEmpty()) {

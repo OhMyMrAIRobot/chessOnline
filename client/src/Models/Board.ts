@@ -31,7 +31,7 @@ export class Board {
 
         // default game
         this.addKings();
-        // this.addQueens();
+        this.addQueens();
         this.addRooks();
         // this.addKnights();
         // this.addPawns();
@@ -68,6 +68,7 @@ export class Board {
         for (const row of this._cells) {
             for (const cell of row) {
                 const figure = cell._figure;
+                console.log(figure)
                 if (figure && figure._color === color) {
                     for (let i = 0; i < 8; i++) {
                         for (let j = 0; j < 8; j++) {
@@ -86,9 +87,11 @@ export class Board {
     public checkStalemate():boolean {
         if (this.checkKings())
             return true;
+
         const whiteKing = this.getKing(Colors.WHITE);
         const blackKing = this.getKing(Colors.BLACK);
-
+        console.log(this.checkMoves(Colors.WHITE));
+        console.log(this.checkMoves(Colors.BLACK));
         return (!this.checkMoves(Colors.WHITE) && !whiteKing.isCellUnderAttack(whiteKing, Colors.BLACK))
             || (!this.checkMoves(Colors.BLACK) && !blackKing.isCellUnderAttack(blackKing, Colors.WHITE));
     }
@@ -114,7 +117,6 @@ export class Board {
                 }
             })
         }
-
         return result;
     }
 
@@ -125,6 +127,28 @@ export class Board {
         } else {
             new King(Colors.BLACK, this.getCell(3, 7));
             new King(Colors.WHITE, this.getCell(3, 0));
+        }
+    }
+
+    private testmate() {
+        if (gameState._color === Colors.WHITE){
+            new King(Colors.BLACK, this.getCell(4, 0));
+            //  new King(Colors.WHITE, this.getCell(4, 7));
+            new King(Colors.WHITE, this.getCell(4, 5));
+            new Bishop(Colors.BLACK, this.getCell(2,5));
+            new Pawn(Colors.BLACK, this.getCell(3,3));
+            new Queen(Colors.BLACK, this.getCell(5,3));
+            new Pawn(Colors.WHITE, this.getCell(4,6));
+            new Pawn(Colors.WHITE, this.getCell(0,6));
+        } else {
+            new King(Colors.BLACK, this.getCell(3, 7));
+            //  new King(Colors.WHITE, this.getCell(3, 0));
+            new King(Colors.WHITE, this.getCell(3, 2));
+            new Bishop(Colors.BLACK, this.getCell(5,2));
+            new Pawn(Colors.BLACK, this.getCell(4,4));
+            new Queen(Colors.BLACK, this.getCell(2,4));
+            new Pawn(Colors.WHITE, this.getCell(3,1));
+            new Pawn(Colors.WHITE, this.getCell(7,1));
         }
     }
 
